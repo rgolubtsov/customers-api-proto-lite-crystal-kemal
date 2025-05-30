@@ -1,0 +1,35 @@
+#
+# shard.yml
+# =============================================================================
+# Customers API Lite microservice prototype (Crystal port). Version 0.0.1
+# =============================================================================
+# A daemon written in Crystal, designed and intended to be run
+# as a microservice, implementing a special Customers API prototype
+# with a smart yet simplified data scheme.
+# =============================================================================
+# (See the LICENSE file at the top of the source tree.)
+#
+
+---
+name:    customers-api-proto-lite-crystal-kemal
+version: 0.0.1
+
+authors:
+    - Radislav (Radicchio) Golubtsov
+
+crystal: '>= 1.15.1'
+
+description: "A daemon written in Crystal, designed and intended to be run
+    as a microservice, implementing a special Customers API prototype
+    with a smart yet simplified data scheme."
+
+license: MIT
+
+repository: "https://github.com/rgolubtsov/customers-api-proto-lite-crystal-kemal"
+
+targets:
+    api-lited:
+        main: src/api-lite-core.cr
+
+# vim:set nu et ts=4 sw=4:
+...
