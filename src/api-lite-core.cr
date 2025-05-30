@@ -12,14 +12,20 @@
 
 # The main module of the daemon -----------------------------------------------
 
+require "kemal"
+
 module Core
     VERSION = "0.0.1"
 
     def init()
         puts()
     end
+
+    get "/" do
+        ret = ""; (1 .. 79).each() do ret += "-" end; ret += "\n"
+    end
 end
 
-include Core; init()
+include Core; init(); Kemal.run()
 
 # vim:set nu et ts=4 sw=4:
