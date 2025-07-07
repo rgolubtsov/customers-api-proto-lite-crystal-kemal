@@ -26,4 +26,52 @@ Surely, one may consider this project to be suitable for a wide variety of appli
 
 ---
 
+## Table of Contents
+
+* **[Building](#building)**
+* **[Running](#running)**
+
+## Building
+
+The microservice might be built and run successfully under **Arch Linux** (proven).
+
+**Build** the microservice using the **Shards utility**:
+
+```
+$ # First pull and install all the necessary dependencies, if not already there:
+$ shards
+Resolving dependencies
+Fetching https://github.com/crystal-community/toml.cr.git
+Fetching https://github.com/kemalcr/kemal.git
+Fetching https://github.com/luislavena/radix.git
+Fetching https://github.com/crystal-loot/exception_page.git
+Fetching https://github.com/sija/backtracer.cr.git
+Using toml (0.8.1)
+Using radix (0.4.1)
+Using backtracer (1.2.4)
+Using exception_page (0.5.0)
+Using kemal (1.7.1)
+$
+$ # Then build the microservice itself:
+$ shards build
+Dependencies are satisfied
+Building: api-lited
+```
+
+:cd:
+
+## Running
+
+**Run** the microservice using its executable directly, built previously by the Shards utility:
+
+```
+$ ./bin/api-lited; echo $?
+Customers API Lite
+...
+```
+
+:cd:
+
+---
+
 :dvd:
