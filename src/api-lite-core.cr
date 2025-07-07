@@ -14,18 +14,36 @@
 
 require "kemal"
 
-module Core
-    VERSION = "0.0.1"
+require "./api-lite-helper"; include Helper
 
-    def init()
-        puts()
+module Core
+    # The microservice "entry point".
+    def core()
+        # Getting the daemon settings.
+        settings = _get_settings()
+
+        daemon_name = settings[DAEMON_NAME_G][DAEMON_NAME_S].as_s()
+
+        # Getting the port number used to run the Kemal web server.
+        server_port = settings[SERVER_PORT_G][SERVER_PORT_S].as_i()
+
+        # Identifying whether debug logging is enabled.
+#       dbg = settings[LOG_ENABLED_G][LOG_ENABLED_S1][LOG_ENABLED_S2].as_bool()
+
+        # Getting the SQLite database path.
+        database_path = settings[DB_PATH_G][DB_PATH_S1][DB_PATH_S2].as_s()
+
+        return daemon_name, server_port
     end
 
     get "/" do
         ret = ""; (1 .. 79).each() do ret += "-" end; ret += "\n"
     end
-end
+end; include Core; daemon_name, server_port = core()
 
-include Core; init(); Kemal.run()
+puts(daemon_name)
+
+# Starting up the Kemal web server.
+Kemal.run(server_port)
 
 # vim:set nu et ts=4 sw=4:
