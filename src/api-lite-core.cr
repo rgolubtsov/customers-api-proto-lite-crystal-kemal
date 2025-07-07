@@ -14,7 +14,8 @@
 
 require "kemal"
 
-require "./api-lite-helper"; include Helper
+require "./api-lite-helper";     include Helper
+require "./api-lite-controller"; include Controller
 
 module Core
     # The microservice "entry point".
@@ -34,10 +35,6 @@ module Core
         database_path = settings[DB_PATH_G][DB_PATH_S1][DB_PATH_S2].as_s()
 
         return daemon_name, server_port
-    end
-
-    get "/" do
-        ret = ""; (1 .. 79).each() do ret += "-" end; ret += "\n"
     end
 end; include Core; daemon_name, server_port = core()
 

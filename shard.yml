@@ -35,8 +35,9 @@ repository: "https://github.com/rgolubtsov/customers-api-proto-lite-crystal-kema
 
 targets:
     api-lited:
-        main:   src/api-lite-core.cr
-        helper: src/api-lite-helper.cr
+        main:       src/api-lite-core.cr
+        controller: src/api-lite-controller.cr
+        helper:     src/api-lite-helper.cr
 
 # vim:set nu et ts=4 sw=4:
 ...
