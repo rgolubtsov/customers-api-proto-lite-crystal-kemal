@@ -16,3 +16,7 @@ shards:
     git: https://github.com/luislavena/radix.git
     version: 0.4.1
 
+  toml:
+    git: https://github.com/crystal-community/toml.cr.git
+    version: 0.8.1
+
