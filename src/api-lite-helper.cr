@@ -15,6 +15,14 @@
 require "toml"
 
 module Helper
+    # Helper constants.
+    O_BRACKET = "["
+    C_BRACKET = "]"
+
+    # Common notification messages.
+    MSG_SERVER_STARTED = "Server started on port "
+    MSG_SERVER_STOPPED = "Server stopped"
+
     # The path and filename of the daemon settings.
     SETTINGS = "./etc/settings.conf"
 
@@ -39,6 +47,11 @@ module Helper
     # Helper function. Used to get the daemon settings.
     def _get_settings()
         settings = TOML.parse(File.read(SETTINGS))
+    end
+
+    # Helper function. Used to log messages for debugging aims in a free form.
+    def _dbg(dbg, message)
+        puts(message) if (dbg)
     end
 end
 
