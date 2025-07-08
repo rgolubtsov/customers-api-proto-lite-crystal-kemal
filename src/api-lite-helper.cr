@@ -16,8 +16,9 @@ require "toml"
 
 module Helper
     # Helper constants.
-    O_BRACKET = "["
-    C_BRACKET = "]"
+    EMPTY_STRING =  ""
+    O_BRACKET    = "["
+    C_BRACKET    = "]"
 
     # Common notification messages.
     MSG_SERVER_STARTED = "Server started on port "
@@ -50,8 +51,8 @@ module Helper
     end
 
     # Helper function. Used to log messages for debugging aims in a free form.
-    def _dbg(dbg, message)
-        puts(message) if (dbg)
+    def _dbg(dbg, l, message)
+        l.debug{message} if (dbg)
     end
 end
 
