@@ -27,6 +27,9 @@ module Core
         dbg = settings[LOG_ENABLED_G][LOG_ENABLED_S1][LOG_ENABLED_S2]
             .as_bool() rescue false
 
+        # Creating and configuring the main logger of the daemon.
+        Log.setup(:debug); l = Log.for(EMPTY_STRING)
+
         daemon_name = settings[DAEMON_NAME_G][DAEMON_NAME_S].as_s()
 
         # Getting the port number used to run the Kemal web server.
@@ -35,12 +38,13 @@ module Core
         # Getting the SQLite database path.
         database_path = settings[DB_PATH_G][DB_PATH_S1][DB_PATH_S2].as_s()
 
-        return dbg, daemon_name, server_port
+        return dbg, l, daemon_name, server_port
     end
-end; include Core; dbg, daemon_name, server_port = core()
+end; include Core; dbg, l, daemon_name, server_port = core()
 
-_dbg(dbg, O_BRACKET + daemon_name + C_BRACKET)
-_dbg(dbg, "#{MSG_SERVER_STARTED}#{server_port}")
+l.info{O_BRACKET + daemon_name + C_BRACKET}
+
+_dbg(dbg, l, "#{MSG_SERVER_STARTED}#{server_port}")
 
 # Starting up the Kemal web server.
 Kemal.run(server_port)
