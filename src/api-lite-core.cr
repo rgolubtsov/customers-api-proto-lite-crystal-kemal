@@ -23,22 +23,24 @@ module Core
         # Getting the daemon settings.
         settings = _get_settings()
 
+        # Identifying whether debug logging is enabled.
+        dbg = settings[LOG_ENABLED_G][LOG_ENABLED_S1][LOG_ENABLED_S2]
+            .as_bool() rescue false
+
         daemon_name = settings[DAEMON_NAME_G][DAEMON_NAME_S].as_s()
 
         # Getting the port number used to run the Kemal web server.
         server_port = settings[SERVER_PORT_G][SERVER_PORT_S].as_i()
 
-        # Identifying whether debug logging is enabled.
-#       dbg = settings[LOG_ENABLED_G][LOG_ENABLED_S1][LOG_ENABLED_S2].as_bool()
-
         # Getting the SQLite database path.
         database_path = settings[DB_PATH_G][DB_PATH_S1][DB_PATH_S2].as_s()
 
-        return daemon_name, server_port
+        return dbg, daemon_name, server_port
     end
-end; include Core; daemon_name, server_port = core()
+end; include Core; dbg, daemon_name, server_port = core()
 
-puts(daemon_name)
+_dbg(dbg, O_BRACKET + daemon_name + C_BRACKET)
+_dbg(dbg, "#{MSG_SERVER_STARTED}#{server_port}")
 
 # Starting up the Kemal web server.
 Kemal.run(server_port)
