@@ -24,6 +24,8 @@ Generally speaking, this project might be explored as a PoC (proof of concept) o
 
 Surely, one may consider this project to be suitable for a wide variety of applied areas and may use this prototype as: (1) a template for building similar microservices, (2) for evolving it to make something more universal, or (3) to simply explore it and take out some snippets and techniques from it for *educational purposes*, etc.
 
+> **Note:** This project is currently not in active development and postponed for a while... but will be alive soon.
+
 ---
 
 ## Table of Contents
