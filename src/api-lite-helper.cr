@@ -17,6 +17,7 @@ require "toml"
 module Helper
     # Helper constants.
     EMPTY_STRING =  ""
+    SPACE        = " "
     O_BRACKET    = "["
     C_BRACKET    = "]"
 

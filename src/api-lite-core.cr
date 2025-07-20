@@ -28,7 +28,13 @@ module Core
             .as_bool() rescue false
 
         # Creating and configuring the main logger of the daemon.
-        Log.setup(:debug); l = Log.for(EMPTY_STRING)
+        Log.setup(:debug,
+            Log::IOBackend.new(formatter: Log::Formatter.new do |entry, io|
+                io << O_BRACKET << entry.timestamp << C_BRACKET + SPACE +
+                      O_BRACKET << entry.severity  << C_BRACKET + SPACE <<
+                                   entry.message
+            end)
+        ); l = Log.for(EMPTY_STRING)
 
         daemon_name = settings[DAEMON_NAME_G][DAEMON_NAME_S].as_s()
 
