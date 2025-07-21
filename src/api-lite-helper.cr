@@ -41,7 +41,11 @@ module Helper
     LOG_ENABLED_S1 = "debug"
     LOG_ENABLED_S2 = "enabled"
 
+    LOG_DIR = "./log/"
+    LOGFILE = "customers-api-lite.log"
     LOGTIME = "[%F][%T]"
+    LOGSRCS = "*"
+    APPEND_ = "a+"
 
     SVRT_INFO = "INFO"
     SVRT_WARN = "WARN"
