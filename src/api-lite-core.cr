@@ -28,11 +28,16 @@ module Core
             .as_bool() rescue false
 
         # Creating and configuring the main logger of the daemon.
-        Log.setup(:debug,
+        logtime = Time::Format.new(LOGTIME); Log.setup(:debug,
             Log::IOBackend.new(formatter: Log::Formatter.new do |entry, io|
-                io << O_BRACKET << entry.timestamp << C_BRACKET + SPACE +
-                      O_BRACKET << entry.severity  << C_BRACKET + SPACE <<
-                                   entry.message
+                entry_severity = entry.severity.label()
+                if ((entry_severity == SVRT_INFO) ||
+                    (entry_severity == SVRT_WARN))
+                     entry_severity += SPACE
+                end
+                io << logtime.format(entry.timestamp) + SPACE + O_BRACKET <<
+                                     entry_severity          << C_BRACKET +
+                            SPACE << entry.message
             end)
         ); l = Log.for(EMPTY_STRING)
 

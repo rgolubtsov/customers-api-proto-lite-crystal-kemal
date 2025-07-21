@@ -41,6 +41,11 @@ module Helper
     LOG_ENABLED_S1 = "debug"
     LOG_ENABLED_S2 = "enabled"
 
+    LOGTIME = "[%F][%T]"
+
+    SVRT_INFO = "INFO"
+    SVRT_WARN = "WARN"
+
     # Daemon settings keys for the SQLite database path.
     DB_PATH_G  = "sqlite"
     DB_PATH_S1 = "database"
