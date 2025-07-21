@@ -1,7 +1,7 @@
 #
 # src/api-lite-helper.cr
 # =============================================================================
-# Customers API Lite microservice prototype (Crystal port). Version 0.0.1
+# Customers API Lite microservice prototype (Crystal port). Version 0.0.5
 # =============================================================================
 # A daemon written in Crystal, designed and intended to be run
 # as a microservice, implementing a special Customers API prototype
@@ -17,6 +17,7 @@ require "toml"
 module Helper
     # Helper constants.
     EMPTY_STRING =  ""
+    SPACE        = " "
     O_BRACKET    = "["
     C_BRACKET    = "]"
 
@@ -39,6 +40,15 @@ module Helper
     LOG_ENABLED_G  = "logger"
     LOG_ENABLED_S1 = "debug"
     LOG_ENABLED_S2 = "enabled"
+
+    LOG_DIR = "./log/"
+    LOGFILE = "customers-api-lite.log"
+    LOGTIME = "[%F][%T]"
+    LOGSRCS = "*"
+    APPEND_ = "a+"
+
+    SVRT_INFO = "INFO"
+    SVRT_WARN = "WARN"
 
     # Daemon settings keys for the SQLite database path.
     DB_PATH_G  = "sqlite"
