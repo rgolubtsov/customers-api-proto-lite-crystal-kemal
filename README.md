@@ -66,9 +66,9 @@ Building: api-lited
 
 ```
 $ ./bin/api-lited; echo $?
-2025-07-08T21:37:10.850940Z   INFO - [Customers API Lite]
-2025-07-08T21:37:10.850948Z  DEBUG - Server started on port 8765
-...
+[2025-07-21][23:30:10] [INFO ] [Customers API Lite]
+[2025-07-21][23:30:10] [DEBUG] Server started on port 8765
+[2025-07-21][23:30:10] [INFO ] [development] Kemal is ready to lead at http://0.0.0.0:8765
 ```
 
 :cd:
