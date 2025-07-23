@@ -29,30 +29,15 @@ module Core
 
         # Creating and configuring the main logger of the daemon.
         Dir.mkdir(LOG_DIR) if (!Dir.exists?(LOG_DIR))
-        logtime = Time::Format.new(LOGTIME)
         Log.setup do |s|
             cons_backend =
                 Log::IOBackend.new(formatter: Log::Formatter.new do |entry, io|
-                entry_severity = entry.severity.label()
-                if ((entry_severity == SVRT_INFO) ||
-                    (entry_severity == SVRT_WARN))
-                     entry_severity += SPACE
-                end
-                io << logtime.format(entry.timestamp) + SPACE + O_BRACKET <<
-                                     entry_severity          << C_BRACKET +
-                            SPACE << entry.message
+                _set_log_format(entry, io)
             end)
             file_backend =
                 Log::IOBackend.new(File.new(LOG_DIR + LOGFILE, APPEND_),
                                    formatter: Log::Formatter.new do |entry, io|
-                entry_severity = entry.severity.label()
-                if ((entry_severity == SVRT_INFO) ||
-                    (entry_severity == SVRT_WARN))
-                     entry_severity += SPACE
-                end
-                io << logtime.format(entry.timestamp) + SPACE + O_BRACKET <<
-                                     entry_severity          << C_BRACKET +
-                            SPACE << entry.message
+                _set_log_format(entry, io)
             end)
             s.bind(LOGSRCS, :debug, cons_backend)
             s.bind(LOGSRCS, :debug, file_backend)

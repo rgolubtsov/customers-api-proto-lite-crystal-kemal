@@ -60,6 +60,21 @@ module Helper
         settings = TOML.parse(File.read(SETTINGS))
     end
 
+    # Helper func. Used to set log format for both console and logfile output.
+    def _set_log_format(entry, io)
+        logtime = Time::Format.new(LOGTIME)
+
+        entry_severity = entry.severity.label()
+
+        if ((entry_severity == SVRT_INFO) || (entry_severity == SVRT_WARN))
+             entry_severity += SPACE
+        end
+
+        io << logtime.format(entry.timestamp)            + SPACE +
+                O_BRACKET << entry_severity << C_BRACKET + SPACE <<
+                             entry.message
+    end
+
     # Helper function. Used to log messages for debugging aims in a free form.
     def _dbg(dbg, l, message)
         l.debug{message} if (dbg)
