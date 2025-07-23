@@ -22,6 +22,8 @@ crystal: '>= 1.15.1'
 dependencies:
     toml:
         github: crystal-community/toml.cr
+    syslog:
+        github: chris-huxtable/syslog.cr
     kemal:
         github: kemalcr/kemal
 
