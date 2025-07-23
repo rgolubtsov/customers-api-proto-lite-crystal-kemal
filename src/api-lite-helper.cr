@@ -1,7 +1,7 @@
 #
 # src/api-lite-helper.cr
 # =============================================================================
-# Customers API Lite microservice prototype (Crystal port). Version 0.0.5
+# Customers API Lite microservice prototype (Crystal port). Version 0.0.9
 # =============================================================================
 # A daemon written in Crystal, designed and intended to be run
 # as a microservice, implementing a special Customers API prototype
@@ -77,7 +77,10 @@ module Helper
 
     # Helper function. Used to log messages for debugging aims in a free form.
     def _dbg(dbg, l, message)
-        l.debug{message} if (dbg)
+        if (dbg)
+                 l.debug{message}
+            Syslog.debug(message)
+        end
     end
 end
 

@@ -1,7 +1,7 @@
 #
 # src/api-lite-core.cr
 # =============================================================================
-# Customers API Lite microservice prototype (Crystal port). Version 0.0.5
+# Customers API Lite microservice prototype (Crystal port). Version 0.0.9
 # =============================================================================
 # A daemon written in Crystal, designed and intended to be run
 # as a microservice, implementing a special Customers API prototype
@@ -12,6 +12,7 @@
 
 # The main module of the daemon -----------------------------------------------
 
+require "syslog"
 require "kemal"
 
 require "./api-lite-helper";     include Helper
@@ -44,6 +45,12 @@ module Core
         end
         l = Log.for(EMPTY_STRING)
 
+        # Opening the system logger.
+        # Calling <syslog.h> openlog(NULL, LOG_CONS | LOG_PID, LOG_DAEMON);
+        Syslog.setup(Path[PROGRAM_NAME].basename(), Syslog::Facility::Daemon,
+                                                    Syslog::Options::Console |
+                                                    Syslog::Options::PID, 0xff)
+
         daemon_name = settings[DAEMON_NAME_G][DAEMON_NAME_S].as_s()
 
         # Getting the port number used to run the Kemal web server.
@@ -56,11 +63,18 @@ module Core
     end
 end; include Core; dbg, l, daemon_name, server_port = core()
 
-l.info{O_BRACKET + daemon_name + C_BRACKET}
+_dbg(dbg, l, O_BRACKET + daemon_name + C_BRACKET)
 
-_dbg(dbg, l, "#{MSG_SERVER_STARTED}#{server_port}")
+     l.info{"#{MSG_SERVER_STARTED}#{server_port}"}
+Syslog.info("#{MSG_SERVER_STARTED}#{server_port}")
 
 # Starting up the Kemal web server.
 Kemal.run(server_port)
+
+Syslog.info(MSG_SERVER_STOPPED)
+
+# Closing the system logger.
+# Calling <syslog.h> closelog();
+Syslog.close()
 
 # vim:set nu et ts=4 sw=4:
