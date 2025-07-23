@@ -77,7 +77,10 @@ module Helper
 
     # Helper function. Used to log messages for debugging aims in a free form.
     def _dbg(dbg, l, message)
-        l.debug{message} if (dbg)
+        if (dbg)
+                 l.debug{message}
+            Syslog.debug(message)
+        end
     end
 end
 
