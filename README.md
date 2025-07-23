@@ -79,15 +79,25 @@ The microservice should expose **six REST API endpoints** to web clients...
 
 ### Logging
 
-The microservice has the ability to log messages to a logfile ~~and to the Unix syslog facility~~. To enable debug logging, the `debug.enabled` setting in the microservice main config file `etc/settings.conf` should be set to `true` *before starting up the microservice*. When running under Arch Linux (not in a Docker container), logs can be seen and analyzed in an ordinary fashion, by `tail`ing the `log/customers-api-lite.log` logfile:
+The microservice has the ability to log messages to a logfile and to the Unix syslog facility. To enable debug logging, the `debug.enabled` setting in the microservice main config file `etc/settings.conf` should be set to `true` *before starting up the microservice*. When running under Arch Linux (not in a Docker container), logs can be seen and analyzed in an ordinary fashion, by `tail`ing the `log/customers-api-lite.log` logfile:
 
 ```
 $ tail -f log/customers-api-lite.log
-[2025-07-23][19:40:30] [INFO ] [Customers API Lite]
-[2025-07-23][19:40:30] [DEBUG] Server started on port 8765
-[2025-07-23][19:40:30] [INFO ] [development] Kemal is ready to lead at http://0.0.0.0:8765
-[2025-07-23][19:40:35] [INFO ] 404 GET /v1/customers 130.46µs
-[2025-07-23][19:40:40] [INFO ] Kemal is going to take a rest!
+[2025-07-23][23:35:10] [DEBUG] [Customers API Lite]
+[2025-07-23][23:35:10] [INFO ] Server started on port 8765
+[2025-07-23][23:35:10] [INFO ] [development] Kemal is ready to lead at http://0.0.0.0:8765
+[2025-07-23][23:35:15] [INFO ] 404 GET /v1/customers 251.58µs
+[2025-07-23][23:35:30] [INFO ] Kemal is going to take a rest!
+```
+
+Messages registered by the Unix system logger can be seen and analyzed using the `journalctl` utility:
+
+```
+$ journalctl -f
+...
+Jul 23 23:35:10 <hostname> api-lited[<pid>]: [Customers API Lite]
+Jul 23 23:35:10 <hostname> api-lited[<pid>]: Server started on port 8765
+Jul 23 23:35:30 <hostname> api-lited[<pid>]: Server stopped
 ```
 
 :cd:
