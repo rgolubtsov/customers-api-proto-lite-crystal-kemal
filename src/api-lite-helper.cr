@@ -16,6 +16,8 @@ require "toml"
 
 module Helper
     # Helper constants.
+    EXIT_FAILURE =   1 #    Failing exit status.
+    EXIT_SUCCESS =   0 # Successful exit status.
     EMPTY_STRING =  ""
     SPACE        = " "
     O_BRACKET    = "["
@@ -24,6 +26,14 @@ module Helper
     # Common notification messages.
     MSG_SERVER_STARTED = "Server started on port "
     MSG_SERVER_STOPPED = "Server stopped"
+
+    # Common error messages.
+    ERR_CANNOT_START_SERVER =
+        "FATAL: Cannot start server "
+    ERR_ADDR_ALREADY_IN_USE =
+        "due to address requested already in use. Quitting..."
+    ERR_SERV_UNKNOWN_REASON =
+        "for an unknown reason. Quitting..."
 
     # The path and filename of the daemon settings.
     SETTINGS = "./etc/settings.conf"
@@ -81,6 +91,15 @@ module Helper
                  l.debug{message}
             Syslog.debug(message)
         end
+    end
+
+    # Helper function. Makes final cleanups, closes streams, etc.
+    def _cleanup()
+        Syslog.info(MSG_SERVER_STOPPED)
+
+        # Closing the system logger.
+        # Calling <syslog.h> closelog();
+        Syslog.close()
     end
 end
 

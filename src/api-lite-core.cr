@@ -68,13 +68,21 @@ _dbg(dbg, l, O_BRACKET + daemon_name + C_BRACKET)
      l.info{"#{MSG_SERVER_STARTED}#{server_port}"}
 Syslog.info("#{MSG_SERVER_STARTED}#{server_port}")
 
-# Starting up the Kemal web server.
-Kemal.run(server_port)
-
-Syslog.info(MSG_SERVER_STOPPED)
-
-# Closing the system logger.
-# Calling <syslog.h> closelog();
-Syslog.close()
+# Trying to start up the Kemal web server.
+begin
+    Kemal.run(server_port)
+rescue e: Socket::BindError
+    l.error{ERR_CANNOT_START_SERVER + ERR_ADDR_ALREADY_IN_USE}
+    l.info {MSG_SERVER_STOPPED}
+    _cleanup()
+    exit(EXIT_FAILURE)
+rescue
+    l.error{ERR_CANNOT_START_SERVER + ERR_SERV_UNKNOWN_REASON}
+    l.info {MSG_SERVER_STOPPED}
+    _cleanup()
+    exit(EXIT_FAILURE)
+else
+    _cleanup()
+end
 
 # vim:set nu et ts=4 sw=4:
