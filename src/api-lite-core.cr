@@ -54,7 +54,7 @@ module Core
         daemon_name = settings[DAEMON_NAME_G][DAEMON_NAME_S].as_s()
 
         # Getting the port number used to run the Kemal web server.
-        server_port = settings[SERVER_PORT_G][SERVER_PORT_S].as_i()
+        server_port = _get_server_port(settings, l)
 
         # Getting the SQLite database path.
         database_path = settings[DB_PATH_G][DB_PATH_S1][DB_PATH_S2].as_s()
