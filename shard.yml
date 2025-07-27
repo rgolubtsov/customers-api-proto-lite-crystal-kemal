@@ -1,7 +1,7 @@
 #
 # shard.yml
 # =============================================================================
-# Customers API Lite microservice prototype (Crystal port). Version 0.0.9
+# Customers API Lite microservice prototype (Crystal port). Version 0.1.1
 # =============================================================================
 # A daemon written in Crystal, designed and intended to be run
 # as a microservice, implementing a special Customers API prototype
@@ -12,7 +12,7 @@
 
 ---
 name:    customers-api-proto-lite-crystal-kemal
-version: 0.0.9
+version: 0.1.1
 
 authors:
     - Radislav (Radicchio) Golubtsov
@@ -24,6 +24,8 @@ dependencies:
         github: crystal-community/toml.cr
     syslog:
         github: chris-huxtable/syslog.cr
+    sqlite3:
+        github: crystal-lang/crystal-sqlite3
     kemal:
         github: kemalcr/kemal
 

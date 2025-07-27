@@ -44,18 +44,27 @@ $ # First pull and install all the necessary dependencies, if not already there:
 $ shards
 Resolving dependencies
 Fetching https://github.com/crystal-community/toml.cr.git
+Fetching https://github.com/chris-huxtable/syslog.cr.git
 Fetching https://github.com/kemalcr/kemal.git
+Fetching https://github.com/crystal-lang/crystal-sqlite3.git
+Fetching https://github.com/crystal-lang/crystal-db.git
 Fetching https://github.com/luislavena/radix.git
 Fetching https://github.com/crystal-loot/exception_page.git
 Fetching https://github.com/sija/backtracer.cr.git
 Using toml (0.8.1)
+Using syslog (0.1.2)
+Using db (0.13.1)
+Using sqlite3 (0.21.0)
 Using radix (0.4.1)
 Using backtracer (1.2.4)
 Using exception_page (0.5.0)
 Using kemal (1.7.1)
 $
 $ # Then build the microservice itself:
-$ shards build
+$ shards build && \
+  if [ -f data/db/customers-api-lite.db.xz ]; then \
+      unxz data/db/customers-api-lite.db.xz; \
+  fi
 Dependencies are satisfied
 Building: api-lited
 ```
@@ -83,11 +92,12 @@ The microservice has the ability to log messages to a logfile and to the Unix sy
 
 ```
 $ tail -f log/customers-api-lite.log
-[2025-07-23][23:35:10] [DEBUG] [Customers API Lite]
-[2025-07-23][23:35:10] [INFO ] Server started on port 8765
-[2025-07-23][23:35:10] [INFO ] [development] Kemal is ready to lead at http://0.0.0.0:8765
-[2025-07-23][23:35:15] [INFO ] 404 GET /v1/customers 251.58µs
-[2025-07-23][23:35:30] [INFO ] Kemal is going to take a rest!
+[2025-07-27][22:25:10] [DEBUG] [Customers API Lite]
+[2025-07-27][22:25:10] [DEBUG] [#<DB::Database:0x7dc92c47ded0>]
+[2025-07-27][22:25:10] [INFO ] Server started on port 8765
+[2025-07-27][22:25:10] [INFO ] [development] Kemal is ready to lead at http://0.0.0.0:8765
+[2025-07-27][22:25:20] [INFO ] 404 GET /v1/customers 209.23µs
+[2025-07-27][22:25:30] [INFO ] Kemal is going to take a rest!
 ```
 
 Messages registered by the Unix system logger can be seen and analyzed using the `journalctl` utility:
@@ -95,9 +105,10 @@ Messages registered by the Unix system logger can be seen and analyzed using the
 ```
 $ journalctl -f
 ...
-Jul 23 23:35:10 <hostname> api-lited[<pid>]: [Customers API Lite]
-Jul 23 23:35:10 <hostname> api-lited[<pid>]: Server started on port 8765
-Jul 23 23:35:30 <hostname> api-lited[<pid>]: Server stopped
+Jul 27 22:25:10 <hostname> api-lited[<pid>]: [Customers API Lite]
+Jul 27 22:25:10 <hostname> api-lited[<pid>]: [#<DB::Database:0x7dc92c47ded0>]
+Jul 27 22:25:10 <hostname> api-lited[<pid>]: Server started on port 8765
+Jul 27 22:25:30 <hostname> api-lited[<pid>]: Server stopped
 ```
 
 :cd:

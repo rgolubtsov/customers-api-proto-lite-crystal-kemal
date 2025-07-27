@@ -1,7 +1,7 @@
 #
 # src/api-lite-helper.cr
 # =============================================================================
-# Customers API Lite microservice prototype (Crystal port). Version 0.0.9
+# Customers API Lite microservice prototype (Crystal port). Version 0.1.1
 # =============================================================================
 # A daemon written in Crystal, designed and intended to be run
 # as a microservice, implementing a special Customers API prototype
@@ -28,6 +28,10 @@ module Helper
     MSG_SERVER_STOPPED = "Server stopped"
 
     # Common error messages.
+    ERR_PORT_VALID_MUST_BE_POSITIVE_INT =
+        "Valid server port must be a positive integer value, "   +
+        "in the range 1024 .. 49151. The default value of 8080 " +
+        "will be used instead."
     ERR_CANNOT_START_SERVER =
         "FATAL: Cannot start server "
     ERR_ADDR_ALREADY_IN_USE =
@@ -37,6 +41,15 @@ module Helper
 
     # The path and filename of the daemon settings.
     SETTINGS = "./etc/settings.conf"
+
+    # The minimum port number allowed.
+    MIN_PORT = 1024
+
+    # The maximum port number allowed.
+    MAX_PORT = 49151
+
+    # The default server port number.
+    DEF_PORT = 8080
 
     # Daemon settings keys for the microservice daemon name.
     DAEMON_NAME_G = "daemon"
@@ -65,9 +78,28 @@ module Helper
     DB_PATH_S1 = "database"
     DB_PATH_S2 = "path"
 
+    # The SQLite database connection schema.
+    DB_CONN_SCHEMA = "sqlite3://"
+
     # Helper function. Used to get the daemon settings.
     def _get_settings()
         settings = TOML.parse(File.read(SETTINGS))
+    end
+
+    # Helper function. Retrieves the port number used to run
+    #                  the Kemal web server, from daemon settings.
+    def _get_server_port(settings, l)
+        server_port = settings[SERVER_PORT_G][SERVER_PORT_S].as_i()
+
+        if (server_port != 0)
+            if ((server_port >= MIN_PORT) && (server_port <= MAX_PORT))
+                return server_port
+            else
+                l.error{ERR_PORT_VALID_MUST_BE_POSITIVE_INT}; return DEF_PORT
+            end
+        else
+            l.error{ERR_PORT_VALID_MUST_BE_POSITIVE_INT}; return DEF_PORT
+        end
     end
 
     # Helper func. Used to set log format for both console and logfile output.
@@ -94,7 +126,9 @@ module Helper
     end
 
     # Helper function. Makes final cleanups, closes streams, etc.
-    def _cleanup()
+    def _cleanup(cnx)
+        cnx.close()
+
         Syslog.info(MSG_SERVER_STOPPED)
 
         # Closing the system logger.
