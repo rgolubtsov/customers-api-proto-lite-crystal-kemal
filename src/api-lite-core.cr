@@ -13,6 +13,7 @@
 # The main module of the daemon -----------------------------------------------
 
 require "syslog"
+require "sqlite3"
 require "kemal"
 
 require "./api-lite-helper";     include Helper
@@ -59,11 +60,16 @@ module Core
         # Getting the SQLite database path.
         database_path = settings[DB_PATH_G][DB_PATH_S1][DB_PATH_S2].as_s()
 
-        return dbg, l, daemon_name, server_port
+        # Connecting to the database.
+        cnx = DB.open(DB_CONN_SCHEMA + database_path)
+
+        return dbg, l, daemon_name, cnx, server_port
     end
-end; include Core; dbg, l, daemon_name, server_port = core()
+end; include Core; dbg, l, daemon_name, cnx, server_port = core()
 
 _dbg(dbg, l, O_BRACKET + daemon_name + C_BRACKET)
+
+_dbg(dbg, l, "#{O_BRACKET}#{cnx}#{C_BRACKET}")
 
      l.info{"#{MSG_SERVER_STARTED}#{server_port}"}
 Syslog.info("#{MSG_SERVER_STARTED}#{server_port}")
@@ -74,15 +80,15 @@ begin
 rescue e: Socket::BindError
     l.error{ERR_CANNOT_START_SERVER + ERR_ADDR_ALREADY_IN_USE}
     l.info {MSG_SERVER_STOPPED}
-    _cleanup()
+    _cleanup(cnx)
     exit(EXIT_FAILURE)
 rescue
     l.error{ERR_CANNOT_START_SERVER + ERR_SERV_UNKNOWN_REASON}
     l.info {MSG_SERVER_STOPPED}
-    _cleanup()
+    _cleanup(cnx)
     exit(EXIT_FAILURE)
 else
-    _cleanup()
+    _cleanup(cnx)
 end
 
 # vim:set nu et ts=4 sw=4:

@@ -78,6 +78,9 @@ module Helper
     DB_PATH_S1 = "database"
     DB_PATH_S2 = "path"
 
+    # The SQLite database connection schema.
+    DB_CONN_SCHEMA = "sqlite3://"
+
     # Helper function. Used to get the daemon settings.
     def _get_settings()
         settings = TOML.parse(File.read(SETTINGS))
@@ -123,7 +126,9 @@ module Helper
     end
 
     # Helper function. Makes final cleanups, closes streams, etc.
-    def _cleanup()
+    def _cleanup(cnx)
+        cnx.close()
+
         Syslog.info(MSG_SERVER_STOPPED)
 
         # Closing the system logger.
