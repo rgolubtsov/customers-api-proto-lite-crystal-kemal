@@ -44,18 +44,27 @@ $ # First pull and install all the necessary dependencies, if not already there:
 $ shards
 Resolving dependencies
 Fetching https://github.com/crystal-community/toml.cr.git
+Fetching https://github.com/chris-huxtable/syslog.cr.git
 Fetching https://github.com/kemalcr/kemal.git
+Fetching https://github.com/crystal-lang/crystal-sqlite3.git
+Fetching https://github.com/crystal-lang/crystal-db.git
 Fetching https://github.com/luislavena/radix.git
 Fetching https://github.com/crystal-loot/exception_page.git
 Fetching https://github.com/sija/backtracer.cr.git
 Using toml (0.8.1)
+Using syslog (0.1.2)
+Using db (0.13.1)
+Using sqlite3 (0.21.0)
 Using radix (0.4.1)
 Using backtracer (1.2.4)
 Using exception_page (0.5.0)
 Using kemal (1.7.1)
 $
 $ # Then build the microservice itself:
-$ shards build
+$ shards build && \
+  if [ -f data/db/customers-api-lite.db.xz ]; then \
+      unxz data/db/customers-api-lite.db.xz; \
+  fi
 Dependencies are satisfied
 Building: api-lited
 ```
