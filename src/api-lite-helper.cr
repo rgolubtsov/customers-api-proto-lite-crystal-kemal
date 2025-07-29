@@ -20,6 +20,8 @@ module Helper
     EXIT_SUCCESS =   0 # Successful exit status.
     EMPTY_STRING =  ""
     SPACE        = " "
+    SLASH        = "/"
+    MINUS        = "-"
     O_BRACKET    = "["
     C_BRACKET    = "]"
 
@@ -80,6 +82,10 @@ module Helper
 
     # The SQLite database connection schema.
     DB_CONN_SCHEMA = "sqlite3://"
+
+    # REST URI path-related constants.
+    REST_VERSION = "v1"
+    REST_PREFIX  = "customers"
 
     # Helper function. Used to get the daemon settings.
     def _get_settings()
