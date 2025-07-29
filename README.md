@@ -35,12 +35,16 @@ Surely, one may consider this project to be suitable for a wide variety of appli
 
 ## Building
 
-The microservice might be built and run successfully under **Arch Linux** (proven).
-
-**Build** the microservice using the **Shards utility**:
+The microservice might be built and run successfully under **Arch Linux** (proven). &mdash; First install the necessary dependencies (`base-devel`, `crystal`, `shards`, `sqlite`, `docker`):
 
 ```
-$ # First pull and install all the necessary dependencies, if not already there:
+$ sudo pacman -Syu base-devel crystal shards sqlite docker
+...
+```
+
+Then pull and install all the necessary third-party libraries (so-called **shards**):
+
+```
 $ shards
 Resolving dependencies
 Fetching https://github.com/crystal-community/toml.cr.git
@@ -59,8 +63,13 @@ Using radix (0.4.1)
 Using backtracer (1.2.4)
 Using exception_page (0.5.0)
 Using kemal (1.7.1)
-$
-$ # Then build the microservice itself:
+```
+
+---
+
+**Build** the microservice using the **Shards utility**:
+
+```
 $ shards build && \
   if [ -f data/db/customers-api-lite.db.xz ]; then \
       unxz data/db/customers-api-lite.db.xz; \
@@ -69,7 +78,14 @@ Dependencies are satisfied
 Building: api-lited
 ```
 
-:cd:
+Or **build** the microservice using **GNU Make** (optional, but for convenience &mdash; it covers the same **Shards utility** build workflow under the hood):
+
+```
+$ make clean
+...
+$ make all  # <== Building the daemon.
+...
+```
 
 ## Running
 
