@@ -89,14 +89,21 @@ $ make all  # <== Building the daemon.
 
 ## Running
 
-**Run** the microservice using its executable directly, built previously by the Shards utility:
+**Run** the microservice using its executable directly, built previously by the Shards utility or GNU Make's `all` target:
 
 ```
 $ ./bin/api-lited; echo $?
 ...
 ```
 
-:cd:
+To run the microservice as a *true* daemon, i.e. in the background, redirecting all the console output to `/dev/null`, the following form of invocation of its executable can be used:
+
+```
+$ ./bin/api-lited > /dev/null 2>&1 &
+...
+```
+
+**Note:** This will suppress all the console output only; logging to a logfile and to the Unix syslog will remain unchanged.
 
 ## Consuming
 
