@@ -13,6 +13,9 @@
 # The controller module of the daemon -----------------------------------------
 
 module Controller
+    dbg = true # <== TODO: Get the debug logging enabler actually and properly.
+    l   = Log.for(EMPTY_STRING)
+
     # The `GET /v1/customers` endpoint.
     #
     # Retrieves from the database and lists all customer profiles.
@@ -20,21 +23,20 @@ module Controller
     # Returns the `200 OK` HTTP status code and the response body
     # in JSON representation, containing a list of all customer profiles.
     # May return client or server error depending on incoming request.
-    get (SLASH + REST_VERSION + SLASH + REST_PREFIX) do |env|
-        method = env.request.method
+    get (SLASH + REST_VERSION + SLASH + REST_PREFIX) do |ctx|
+        method = ctx.request.method
 
-        # TODO: Get the debug logging enabler and the main logger,
-        #       and make use of tracepoints.
-        puts(O_BRACKET + method + C_BRACKET)
+        _dbg(dbg, l, O_BRACKET + method + C_BRACKET)
 
         # FIXME: Do handle the incoming request properly: e.g. return
         #        HTTP 405 Method Not Allowed where applicable, etc.
         if (method == "PUT")
-            puts("---PUT")
+            _dbg(dbg, l, O_BRACKET + "---PUT" + C_BRACKET)
         elsif ((method == "GET") || (method == "HEAD"))
-            puts("---GET, HEAD")
+            _dbg(dbg, l, O_BRACKET + "---GET, HEAD" + C_BRACKET)
         else
-            puts("---POST, PATCH, DELETE, OPTIONS, TRACE, etc.")
+            _dbg(dbg, l, O_BRACKET +
+                "---POST, PATCH, DELETE, OPTIONS, TRACE, etc." + C_BRACKET)
         end
     end
 
