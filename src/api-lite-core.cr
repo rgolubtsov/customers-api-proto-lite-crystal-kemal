@@ -16,8 +16,8 @@ require "syslog"
 require "sqlite3"
 require "kemal"
 
-require "./api-lite-helper";     include Helper
-require "./api-lite-controller"; include Controller
+require "./api-lite-helper"; include Helper
+require "./api-lite-controller"
 
 module Core
     # The microservice "entry point".
