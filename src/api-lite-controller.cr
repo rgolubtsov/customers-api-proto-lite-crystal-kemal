@@ -40,6 +40,74 @@ module Controller
         end
     end
 
+    # The `GET /v1/customers/{customer_id}` endpoint.
+    #
+    # Retrieves profile details for a given customer from the database.
+    #
+    # Returns a specific HTTP status code with profile details for a given
+    # customer (in the response body in JSON representation).
+    # May return client or server error depending on incoming request.
+    get (SLASH + REST_VERSION + SLASH + REST_PREFIX +
+         SLASH + COLON + REST_CUST_ID) do |ctx|
+
+        method = ctx.request.method
+
+        _dbg(dbg, l, O_BRACKET + method + C_BRACKET)
+
+        if ((method == "GET") || (method == "HEAD"))
+            _dbg(dbg, l, O_BRACKET + "---GET, HEAD" + C_BRACKET)
+        else
+            # TODO: Return HTTP 405 Method Not Allowed and relevant JSON resp.
+        end
+    end
+
+    # The `GET /v1/customers/{customer_id}/contacts` endpoint.
+    #
+    # Retrieves from the database and lists all contacts
+    # associated with a given customer.
+    #
+    # Returns the `200 OK` HTTP status code and the response body
+    # in JSON representation, containing a list of all contacts
+    # associated with a given customer.
+    # May return client or server error depending on incoming request.
+    get (SLASH + REST_VERSION + SLASH + REST_PREFIX +
+         SLASH + COLON + REST_CUST_ID + SLASH + REST_CONTACTS) do |ctx|
+
+        method = ctx.request.method
+
+        _dbg(dbg, l, O_BRACKET + method + C_BRACKET)
+
+        if ((method == "GET") || (method == "HEAD"))
+            _dbg(dbg, l, O_BRACKET + "---GET, HEAD" + C_BRACKET)
+        else
+            # TODO: Return HTTP 405 Method Not Allowed and relevant JSON resp.
+        end
+    end
+
+    # The `GET /v1/customers/{customer_id}/contacts/{contact_type}` endpoint.
+    #
+    # Retrieves from the database and lists all contacts of a given type
+    # associated with a given customer.
+    #
+    # Returns the `200 OK` HTTP status code and the response body
+    # in JSON representation, containing a list of all contacts of a given type
+    # associated with a given customer.
+    # May return client or server error depending on incoming request.
+    get (SLASH + REST_VERSION + SLASH + REST_PREFIX +
+         SLASH + COLON + REST_CUST_ID + SLASH + REST_CONTACTS +
+         SLASH + COLON + REST_CONT_TYPE) do |ctx|
+
+        method = ctx.request.method
+
+        _dbg(dbg, l, O_BRACKET + method + C_BRACKET)
+
+        if ((method == "GET") || (method == "HEAD"))
+            _dbg(dbg, l, O_BRACKET + "---GET, HEAD" + C_BRACKET)
+        else
+            # TODO: Return HTTP 405 Method Not Allowed and relevant JSON resp.
+        end
+    end
+
     # Off-topic ---------------------------------------------------------------
 
     get SLASH do
