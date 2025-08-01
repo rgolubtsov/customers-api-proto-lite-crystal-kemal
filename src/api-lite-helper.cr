@@ -21,6 +21,7 @@ module Helper
     EMPTY_STRING =  ""
     SPACE        = " "
     SLASH        = "/"
+    COLON        = ":"
     MINUS        = "-"
     O_BRACKET    = "["
     C_BRACKET    = "]"
@@ -84,8 +85,11 @@ module Helper
     DB_CONN_SCHEMA = "sqlite3://"
 
     # REST URI path-related constants.
-    REST_VERSION = "v1"
-    REST_PREFIX  = "customers"
+    REST_VERSION   = "v1"
+    REST_PREFIX    = "customers"
+    REST_CUST_ID   = "customer_id"
+    REST_CONTACTS  = "contacts"
+    REST_CONT_TYPE = "contact_type"
 
     # Helper function. Used to get the daemon settings.
     def _get_settings()
