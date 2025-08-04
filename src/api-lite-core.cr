@@ -17,7 +17,6 @@ require "sqlite3"
 require "kemal"
 
 require "./api-lite-helper"; include Helper
-require "./api-lite-controller"
 
 module Core
     # The microservice "entry point".
@@ -73,6 +72,14 @@ _dbg(dbg, l, "#{O_BRACKET}#{cnx}#{C_BRACKET}")
 
      l.info{"#{MSG_SERVER_STARTED}#{server_port}"}
 Syslog.info("#{MSG_SERVER_STARTED}#{server_port}")
+
+# Storing the debug logging enabler in the HTTP::Server::Context object
+# for all routes.
+before_all do |ctx|
+    ctx.set("dbg", dbg)
+end
+
+require "./api-lite-controller"
 
 # Trying to start up the Kemal web server.
 begin
