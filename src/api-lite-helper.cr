@@ -91,6 +91,20 @@ module Helper
     REST_CONTACTS  = "contacts"
     REST_CONT_TYPE = "contact_type"
 
+    GLOBS = "globs"
+
+    struct Globs
+        include JSON::Serializable
+        include Kemal::Session::StorableObject
+
+        property(dbg : Bool  )
+        property(l   : String)#Log         )
+        property(cnx : String)#DB::Database)
+
+        def initialize(@dbg, @l, @cnx)
+        end
+    end
+
     # Helper function. Used to get the daemon settings.
     def _get_settings()
         settings = TOML.parse(File.read(SETTINGS))
