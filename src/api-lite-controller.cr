@@ -16,14 +16,25 @@ module Controller
     dbg = true # <== TODO: Get the debug logging enabler actually and properly.
     l   = Log.for(EMPTY_STRING)
 
-    # The `GET /v1/customers` endpoint.
+    # The `PUT /v1/customers` endpoint.
     #
-    # Retrieves from the database and lists all customer profiles.
+    # Creates a new customer (puts customer data to the database).
     #
-    # Returns the `200 OK` HTTP status code and the response body
-    # in JSON representation, containing a list of all customer profiles.
+    # The request body is defined exactly in the form
+    # as `{"name":"{customer_name}"}`. It should be passed with the accompanied
+    # request header `content-type` just like the following:
+    #
+    # ```
+    # -H 'content-type: application/json' -d '{"name":"{customer_name}"}'
+    # ```
+    #
+    # `{customer_name}` is a name assigned to a newly created customer.
+    #
+    # Returns the `201 Created` HTTP status code, the `Location` response
+    # header (among others), and the response body in JSON representation,
+    # containing profile details of a newly created customer.
     # May return client or server error depending on incoming request.
-    get (SLASH + REST_VERSION + SLASH + REST_PREFIX) do |ctx|
+    put (SLASH + REST_VERSION + SLASH + REST_PREFIX) do |ctx|
         method = ctx.request.method
 
         _dbg(dbg, l, O_BRACKET + method + C_BRACKET)
@@ -37,6 +48,60 @@ module Controller
         else
             _dbg(dbg, l, O_BRACKET +
                 "---POST, PATCH, DELETE, OPTIONS, TRACE, etc." + C_BRACKET)
+        end
+    end
+
+    # The `PUT /v1/customers/contacts` endpoint.
+    #
+    # Creates a new contact for a given customer (puts a contact
+    # regarding a given customer to the database).
+    #
+    # The request body is defined exactly in the form
+    # as `{"customer_id":"{customer_id}","contact":"{customer_contact}"}`.
+    # It should be passed with the accompanied request header `content-type`
+    # just like the following:
+    #
+    # ```
+    # -H 'content-type: application/json' -d '{"customer_id":"{customer_id}","contact":"{customer_contact}"}'
+    # ```
+    #
+    # `{customer_id}` is the customer ID used to associate a newly created
+    # contact with this customer.
+    #
+    # Returns the `201 Created` HTTP status code, the `Location` response
+    # header (among others), and the response body in JSON representation,
+    # containing details of a newly created customer contact (phone or email).
+    # May return client or server error depending on incoming request.
+    put (SLASH + REST_VERSION + SLASH + REST_PREFIX +
+         SLASH + REST_CONTACTS) do |ctx|
+
+        method = ctx.request.method
+
+        _dbg(dbg, l, O_BRACKET + method + C_BRACKET)
+
+        if (method == "PUT")
+            _dbg(dbg, l, O_BRACKET + "---PUT" + C_BRACKET)
+        else
+            # TODO: Return HTTP 405 Method Not Allowed and relevant JSON resp.
+        end
+    end
+
+    # The `GET /v1/customers` endpoint.
+    #
+    # Retrieves from the database and lists all customer profiles.
+    #
+    # Returns the `200 OK` HTTP status code and the response body
+    # in JSON representation, containing a list of all customer profiles.
+    # May return client or server error depending on incoming request.
+    get (SLASH + REST_VERSION + SLASH + REST_PREFIX) do |ctx|
+        method = ctx.request.method
+
+        _dbg(dbg, l, O_BRACKET + method + C_BRACKET)
+
+        if ((method == "GET") || (method == "HEAD"))
+            _dbg(dbg, l, O_BRACKET + "---GET, HEAD" + C_BRACKET)
+        else
+            # TODO: Return HTTP 405 Method Not Allowed and relevant JSON resp.
         end
     end
 
