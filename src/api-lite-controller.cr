@@ -13,8 +13,11 @@
 # The controller module of the daemon -----------------------------------------
 
 module Controller
-    dbg = true # <== TODO: Get the debug logging enabler actually and properly.
-    l   = Log.for(EMPTY_STRING)
+    dbg = false; before_all do |ctx|
+        dbg = ctx.get("dbg")
+    end
+
+    l = Log.for(EMPTY_STRING)
 
     # The `PUT /v1/customers` endpoint.
     #
