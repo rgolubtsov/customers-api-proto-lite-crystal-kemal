@@ -28,8 +28,6 @@ dependencies:
         github: crystal-lang/crystal-sqlite3
     kemal:
         github: kemalcr/kemal
-    kemal-session:
-        github: kemalcr/kemal-session
 
 description: "A daemon written in Crystal, designed and intended to be run
     as a microservice, implementing a special Customers API prototype
