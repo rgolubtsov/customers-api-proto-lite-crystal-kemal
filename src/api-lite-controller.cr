@@ -14,7 +14,7 @@
 
 module Controller
     dbg = Helper.dbg()
-    l   = Helper.l()
+    log = Helper.log()
     cnx = Helper.cnx()
 
     # The `PUT /v1/customers` endpoint.
@@ -38,16 +38,16 @@ module Controller
     put (SLASH + REST_VERSION + SLASH + REST_PREFIX) do |ctx|
         method = ctx.request.method
 
-        _dbg(dbg, l, O_BRACKET + method + C_BRACKET)
+        _dbg(dbg, log, O_BRACKET + method + C_BRACKET)
 
         # FIXME: Do handle the incoming request properly: e.g. return
         #        HTTP 405 Method Not Allowed where applicable, etc.
         if (method == "PUT")
-            _dbg(dbg, l, O_BRACKET + "---PUT" + C_BRACKET)
+            _dbg(dbg, log, O_BRACKET + "---PUT" + C_BRACKET)
         elsif ((method == "GET") || (method == "HEAD"))
-            _dbg(dbg, l, O_BRACKET + "---GET, HEAD" + C_BRACKET)
+            _dbg(dbg, log, O_BRACKET + "---GET, HEAD" + C_BRACKET)
         else
-            _dbg(dbg, l, O_BRACKET +
+            _dbg(dbg, log, O_BRACKET +
                 "---POST, PATCH, DELETE, OPTIONS, TRACE, etc." + C_BRACKET)
         end
     end
@@ -78,10 +78,10 @@ module Controller
 
         method = ctx.request.method
 
-        _dbg(dbg, l, O_BRACKET + method + C_BRACKET)
+        _dbg(dbg, log, O_BRACKET + method + C_BRACKET)
 
         if (method == "PUT")
-            _dbg(dbg, l, O_BRACKET + "---PUT" + C_BRACKET)
+            _dbg(dbg, log, O_BRACKET + "---PUT" + C_BRACKET)
         else
             # TODO: Return HTTP 405 Method Not Allowed and relevant JSON resp.
         end
@@ -97,10 +97,10 @@ module Controller
     get (SLASH + REST_VERSION + SLASH + REST_PREFIX) do |ctx|
         method = ctx.request.method
 
-        _dbg(dbg, l, O_BRACKET + method + C_BRACKET)
+        _dbg(dbg, log, O_BRACKET + method + C_BRACKET)
 
         if ((method == "GET") || (method == "HEAD"))
-            _dbg(dbg, l, O_BRACKET + "---GET, HEAD" + C_BRACKET)
+            _dbg(dbg, log, O_BRACKET + "---GET, HEAD" + C_BRACKET)
         else
             # TODO: Return HTTP 405 Method Not Allowed and relevant JSON resp.
         end
@@ -118,10 +118,10 @@ module Controller
 
         method = ctx.request.method
 
-        _dbg(dbg, l, O_BRACKET + method + C_BRACKET)
+        _dbg(dbg, log, O_BRACKET + method + C_BRACKET)
 
         if ((method == "GET") || (method == "HEAD"))
-            _dbg(dbg, l, O_BRACKET + "---GET, HEAD" + C_BRACKET)
+            _dbg(dbg, log, O_BRACKET + "---GET, HEAD" + C_BRACKET)
         else
             # TODO: Return HTTP 405 Method Not Allowed and relevant JSON resp.
         end
@@ -141,10 +141,10 @@ module Controller
 
         method = ctx.request.method
 
-        _dbg(dbg, l, O_BRACKET + method + C_BRACKET)
+        _dbg(dbg, log, O_BRACKET + method + C_BRACKET)
 
         if ((method == "GET") || (method == "HEAD"))
-            _dbg(dbg, l, O_BRACKET + "---GET, HEAD" + C_BRACKET)
+            _dbg(dbg, log, O_BRACKET + "---GET, HEAD" + C_BRACKET)
         else
             # TODO: Return HTTP 405 Method Not Allowed and relevant JSON resp.
         end
@@ -165,10 +165,10 @@ module Controller
 
         method = ctx.request.method
 
-        _dbg(dbg, l, O_BRACKET + method + C_BRACKET)
+        _dbg(dbg, log, O_BRACKET + method + C_BRACKET)
 
         if ((method == "GET") || (method == "HEAD"))
-            _dbg(dbg, l, O_BRACKET + "---GET, HEAD" + C_BRACKET)
+            _dbg(dbg, log, O_BRACKET + "---GET, HEAD" + C_BRACKET)
         else
             # TODO: Return HTTP 405 Method Not Allowed and relevant JSON resp.
         end

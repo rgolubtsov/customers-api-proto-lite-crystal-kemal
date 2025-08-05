@@ -100,17 +100,17 @@ module Helper
 
     # Helper function. Retrieves the port number used to run
     #                  the Kemal web server, from daemon settings.
-    def _get_server_port(settings, l)
+    def _get_server_port(settings, log)
         server_port = settings[SERVER_PORT_G][SERVER_PORT_S].as_i()
 
         if (server_port != 0)
             if ((server_port >= MIN_PORT) && (server_port <= MAX_PORT))
                 return server_port
             else
-                l.error{ERR_PORT_VALID_MUST_BE_POSITIVE_INT}; return DEF_PORT
+                log.error{ERR_PORT_VALID_MUST_BE_POSITIVE_INT}; return DEF_PORT
             end
         else
-            l.error{ERR_PORT_VALID_MUST_BE_POSITIVE_INT}; return DEF_PORT
+            log.error{ERR_PORT_VALID_MUST_BE_POSITIVE_INT}; return DEF_PORT
         end
     end
 
@@ -130,9 +130,9 @@ module Helper
     end
 
     # Helper function. Used to log messages for debugging aims in a free form.
-    def _dbg(dbg, l, message)
+    def _dbg(dbg, log, message)
         if (dbg)
-                 l.debug{message}
+               log.debug{message}
             Syslog.debug(message)
         end
     end
@@ -151,14 +151,14 @@ module Helper
     # Globals and their getters and setters -----------------------------------
 
     @@dbg                = false
-    @@l                  = Log.for(EMPTY_STRING)
+    @@log                = Log.for(EMPTY_STRING)
     @@cnx : DB::Database = DB.open(DB_CONN_SCHEMA)
 
     def dbg() @@dbg end
     def dbg=(@@dbg) end
 
-    def l() @@l end
-    def l=(@@l) end
+    def log() @@log end
+    def log=(@@log) end
 
     def cnx() @@cnx end
     def cnx=(@@cnx) end
