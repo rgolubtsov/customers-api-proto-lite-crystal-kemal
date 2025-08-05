@@ -15,6 +15,8 @@
 require "toml"
 
 module Helper
+    extend self
+
     # Helper constants.
     EXIT_FAILURE =   1 #    Failing exit status.
     EXIT_SUCCESS =   0 # Successful exit status.
@@ -91,20 +93,6 @@ module Helper
     REST_CONTACTS  = "contacts"
     REST_CONT_TYPE = "contact_type"
 
-    GLOBS = "globs"
-
-    struct Globs
-        include JSON::Serializable
-        include Kemal::Session::StorableObject
-
-        property(dbg : Bool  )
-        property(l   : String)#Log         )
-        property(cnx : String)#DB::Database)
-
-        def initialize(@dbg, @l, @cnx)
-        end
-    end
-
     # Helper function. Used to get the daemon settings.
     def _get_settings()
         settings = TOML.parse(File.read(SETTINGS))
@@ -159,6 +147,21 @@ module Helper
         # Calling <syslog.h> closelog();
         Syslog.close()
     end
+
+    # Globals and their getters and setters -----------------------------------
+
+    @@dbg                = false
+    @@l                  = Log.for(EMPTY_STRING)
+    @@cnx : DB::Database = DB.open(DB_CONN_SCHEMA)
+
+    def dbg() @@dbg end
+    def dbg=(@@dbg) end
+
+    def l() @@l end
+    def l=(@@l) end
+
+    def cnx() @@cnx end
+    def cnx=(@@cnx) end
 end
 
 # vim:set nu et ts=4 sw=4:
