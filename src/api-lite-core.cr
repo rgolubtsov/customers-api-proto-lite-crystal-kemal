@@ -15,7 +15,6 @@
 require "syslog"
 require "sqlite3"
 require "kemal"
-require "kemal-session"
 
 require "./api-lite-helper"; include Helper
 
@@ -74,13 +73,9 @@ _dbg(dbg, l, "#{O_BRACKET}#{cnx}#{C_BRACKET}")
      l.info{"#{MSG_SERVER_STARTED}#{server_port}"}
 Syslog.info("#{MSG_SERVER_STARTED}#{server_port}")
 
-Kemal::Session.config.secret = cnx.to_s()
-
-# Storing the debug logging enabler, the main logger, and the database
-# connection pool in the Kemal::Session object for all routes.
-before_all do |ctx|
-    ctx.session.object(GLOBS, Globs.new(dbg, l.to_s(), cnx.to_s()))
-end
+Helper.dbg=(dbg)
+Helper.l=  ( l )
+Helper.cnx=(cnx)
 
 require "./api-lite-controller"
 

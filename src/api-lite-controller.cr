@@ -13,15 +13,9 @@
 # The controller module of the daemon -----------------------------------------
 
 module Controller
-    dbg = false; before_all do |ctx|
-        h = ctx.session.object(GLOBS).as(Globs)
-
-        dbg = h.dbg()
-        l   = h.l()
-        cnx = h.cnx()
-    end
-
-    l = Log.for(EMPTY_STRING)
+    dbg = Helper.dbg()
+    l   = Helper.l()
+    cnx = Helper.cnx()
 
     # The `PUT /v1/customers` endpoint.
     #
