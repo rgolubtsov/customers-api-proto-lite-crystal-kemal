@@ -21,6 +21,7 @@ module Controller
         method = ctx.request.method()
 
         _dbg(dbg, log, O_BRACKET + method + C_BRACKET)
+        _dbg(dbg, log, "#{O_BRACKET}#{cnx}#{C_BRACKET}")
 
         # FIXME: Do handle the incoming request properly: e.g. return
         #        HTTP 405 Method Not Allowed where applicable, etc.
