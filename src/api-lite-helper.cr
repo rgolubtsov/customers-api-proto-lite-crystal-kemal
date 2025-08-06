@@ -15,12 +15,15 @@
 require "toml"
 
 module Helper
+    extend self
+
     # Helper constants.
     EXIT_FAILURE =   1 #    Failing exit status.
     EXIT_SUCCESS =   0 # Successful exit status.
     EMPTY_STRING =  ""
     SPACE        = " "
     SLASH        = "/"
+    COLON        = ":"
     MINUS        = "-"
     O_BRACKET    = "["
     C_BRACKET    = "]"
@@ -84,8 +87,11 @@ module Helper
     DB_CONN_SCHEMA = "sqlite3://"
 
     # REST URI path-related constants.
-    REST_VERSION = "v1"
-    REST_PREFIX  = "customers"
+    REST_VERSION   = "v1"
+    REST_PREFIX    = "customers"
+    REST_CUST_ID   = "customer_id"
+    REST_CONTACTS  = "contacts"
+    REST_CONT_TYPE = "contact_type"
 
     # Helper function. Used to get the daemon settings.
     def _get_settings()
@@ -94,17 +100,17 @@ module Helper
 
     # Helper function. Retrieves the port number used to run
     #                  the Kemal web server, from daemon settings.
-    def _get_server_port(settings, l)
+    def _get_server_port(settings, log)
         server_port = settings[SERVER_PORT_G][SERVER_PORT_S].as_i()
 
         if (server_port != 0)
             if ((server_port >= MIN_PORT) && (server_port <= MAX_PORT))
                 return server_port
             else
-                l.error{ERR_PORT_VALID_MUST_BE_POSITIVE_INT}; return DEF_PORT
+                log.error{ERR_PORT_VALID_MUST_BE_POSITIVE_INT}; return DEF_PORT
             end
         else
-            l.error{ERR_PORT_VALID_MUST_BE_POSITIVE_INT}; return DEF_PORT
+            log.error{ERR_PORT_VALID_MUST_BE_POSITIVE_INT}; return DEF_PORT
         end
     end
 
@@ -124,9 +130,9 @@ module Helper
     end
 
     # Helper function. Used to log messages for debugging aims in a free form.
-    def _dbg(dbg, l, message)
+    def _dbg(dbg, log, message)
         if (dbg)
-                 l.debug{message}
+               log.debug{message}
             Syslog.debug(message)
         end
     end
@@ -141,6 +147,21 @@ module Helper
         # Calling <syslog.h> closelog();
         Syslog.close()
     end
+
+    # Globals and their getters and setters -----------------------------------
+
+    @@dbg                = false
+    @@log                = Log.for(EMPTY_STRING)
+    @@cnx : DB::Database = DB.open(DB_CONN_SCHEMA)
+
+    def dbg() @@dbg end
+    def dbg=(@@dbg) end
+
+    def log() @@log end
+    def log=(@@log) end
+
+    def cnx() @@cnx end
+    def cnx=(@@cnx) end
 end
 
 # vim:set nu et ts=4 sw=4:
