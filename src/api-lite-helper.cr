@@ -93,6 +93,9 @@ module Helper
     REST_CONTACTS  = "contacts"
     REST_CONT_TYPE = "contact_type"
 
+    # HTTP response-related constants.
+    MIME_TYPE = "application/json"
+
     # Helper function. Used to get the daemon settings.
     def _get_settings()
         settings = TOML.parse(File.read(SETTINGS))

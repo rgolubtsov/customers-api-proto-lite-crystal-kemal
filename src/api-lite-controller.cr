@@ -33,6 +33,8 @@ module Controller
             _dbg(dbg, log, O_BRACKET +
                 "---POST, PATCH, DELETE, OPTIONS, TRACE, etc." + C_BRACKET)
         end
+
+        ctx.response.content_type=(MIME_TYPE)
     end
 
     # The `PUT /v1/customers` endpoint.
