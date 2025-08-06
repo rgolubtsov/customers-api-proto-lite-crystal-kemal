@@ -17,6 +17,23 @@ module Controller
     log = Helper.log()
     cnx = Helper.cnx()
 
+    before_all do |ctx|
+        method = ctx.request.method()
+
+        _dbg(dbg, log, O_BRACKET + method + C_BRACKET)
+
+        # FIXME: Do handle the incoming request properly: e.g. return
+        #        HTTP 405 Method Not Allowed where applicable, etc.
+        if (method == "PUT")
+            _dbg(dbg, log, O_BRACKET + "---PUT" + C_BRACKET)
+        elsif ((method == "GET") || (method == "HEAD"))
+            _dbg(dbg, log, O_BRACKET + "---GET, HEAD" + C_BRACKET)
+        else
+            _dbg(dbg, log, O_BRACKET +
+                "---POST, PATCH, DELETE, OPTIONS, TRACE, etc." + C_BRACKET)
+        end
+    end
+
     # The `PUT /v1/customers` endpoint.
     #
     # Creates a new customer (puts customer data to the database).
@@ -36,20 +53,6 @@ module Controller
     # containing profile details of a newly created customer.
     # May return client or server error depending on incoming request.
     put (SLASH + REST_VERSION + SLASH + REST_PREFIX) do |ctx|
-        method = ctx.request.method
-
-        _dbg(dbg, log, O_BRACKET + method + C_BRACKET)
-
-        # FIXME: Do handle the incoming request properly: e.g. return
-        #        HTTP 405 Method Not Allowed where applicable, etc.
-        if (method == "PUT")
-            _dbg(dbg, log, O_BRACKET + "---PUT" + C_BRACKET)
-        elsif ((method == "GET") || (method == "HEAD"))
-            _dbg(dbg, log, O_BRACKET + "---GET, HEAD" + C_BRACKET)
-        else
-            _dbg(dbg, log, O_BRACKET +
-                "---POST, PATCH, DELETE, OPTIONS, TRACE, etc." + C_BRACKET)
-        end
     end
 
     # The `PUT /v1/customers/contacts` endpoint.
@@ -75,16 +78,6 @@ module Controller
     # May return client or server error depending on incoming request.
     put (SLASH + REST_VERSION + SLASH + REST_PREFIX +
          SLASH + REST_CONTACTS) do |ctx|
-
-        method = ctx.request.method
-
-        _dbg(dbg, log, O_BRACKET + method + C_BRACKET)
-
-        if (method == "PUT")
-            _dbg(dbg, log, O_BRACKET + "---PUT" + C_BRACKET)
-        else
-            # TODO: Return HTTP 405 Method Not Allowed and relevant JSON resp.
-        end
     end
 
     # The `GET /v1/customers` endpoint.
@@ -95,15 +88,6 @@ module Controller
     # in JSON representation, containing a list of all customer profiles.
     # May return client or server error depending on incoming request.
     get (SLASH + REST_VERSION + SLASH + REST_PREFIX) do |ctx|
-        method = ctx.request.method
-
-        _dbg(dbg, log, O_BRACKET + method + C_BRACKET)
-
-        if ((method == "GET") || (method == "HEAD"))
-            _dbg(dbg, log, O_BRACKET + "---GET, HEAD" + C_BRACKET)
-        else
-            # TODO: Return HTTP 405 Method Not Allowed and relevant JSON resp.
-        end
     end
 
     # The `GET /v1/customers/{customer_id}` endpoint.
@@ -115,16 +99,6 @@ module Controller
     # May return client or server error depending on incoming request.
     get (SLASH + REST_VERSION + SLASH + REST_PREFIX +
          SLASH + COLON + REST_CUST_ID) do |ctx|
-
-        method = ctx.request.method
-
-        _dbg(dbg, log, O_BRACKET + method + C_BRACKET)
-
-        if ((method == "GET") || (method == "HEAD"))
-            _dbg(dbg, log, O_BRACKET + "---GET, HEAD" + C_BRACKET)
-        else
-            # TODO: Return HTTP 405 Method Not Allowed and relevant JSON resp.
-        end
     end
 
     # The `GET /v1/customers/{customer_id}/contacts` endpoint.
@@ -138,16 +112,6 @@ module Controller
     # May return client or server error depending on incoming request.
     get (SLASH + REST_VERSION + SLASH + REST_PREFIX +
          SLASH + COLON + REST_CUST_ID + SLASH + REST_CONTACTS) do |ctx|
-
-        method = ctx.request.method
-
-        _dbg(dbg, log, O_BRACKET + method + C_BRACKET)
-
-        if ((method == "GET") || (method == "HEAD"))
-            _dbg(dbg, log, O_BRACKET + "---GET, HEAD" + C_BRACKET)
-        else
-            # TODO: Return HTTP 405 Method Not Allowed and relevant JSON resp.
-        end
     end
 
     # The `GET /v1/customers/{customer_id}/contacts/{contact_type}` endpoint.
@@ -162,16 +126,6 @@ module Controller
     get (SLASH + REST_VERSION + SLASH + REST_PREFIX +
          SLASH + COLON + REST_CUST_ID + SLASH + REST_CONTACTS +
          SLASH + COLON + REST_CONT_TYPE) do |ctx|
-
-        method = ctx.request.method
-
-        _dbg(dbg, log, O_BRACKET + method + C_BRACKET)
-
-        if ((method == "GET") || (method == "HEAD"))
-            _dbg(dbg, log, O_BRACKET + "---GET, HEAD" + C_BRACKET)
-        else
-            # TODO: Return HTTP 405 Method Not Allowed and relevant JSON resp.
-        end
     end
 
     # Off-topic ---------------------------------------------------------------
