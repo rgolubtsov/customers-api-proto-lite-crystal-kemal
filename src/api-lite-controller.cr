@@ -19,21 +19,32 @@ module Controller
 
     before_all do |ctx|
         method = ctx.request.method()
+        status = HTTP::Status::IM_A_TEAPOT # <== HTTP 418 I'm a teapot
 
         _dbg(dbg, log, O_BRACKET + method + C_BRACKET)
         _dbg(dbg, log, "#{O_BRACKET}#{cnx}#{C_BRACKET}")
 
-        # FIXME: Do handle the incoming request properly: e.g. return
-        #        HTTP 405 Method Not Allowed where applicable, etc.
-        if (method == "PUT")
+        case (method)
+        when "PUT"
             _dbg(dbg, log, O_BRACKET + "---PUT" + C_BRACKET)
-        elsif ((method == "GET") || (method == "HEAD"))
+
+            status = HTTP::Status::CREATED
+        when "GET", "HEAD"
             _dbg(dbg, log, O_BRACKET + "---GET, HEAD" + C_BRACKET)
+
+            status = HTTP::Status::OK
+        when "POST", "PATCH", "DELETE", "OPTIONS"
+            _dbg(dbg, log, O_BRACKET + "---POST, PATCH, DELETE, OPTIONS" +
+                           C_BRACKET)
+
+            status = HTTP::Status::METHOD_NOT_ALLOWED #< 405 Method Not Allowed
         else
-            _dbg(dbg, log, O_BRACKET +
-                "---POST, PATCH, DELETE, OPTIONS, TRACE, etc." + C_BRACKET)
+            # For any other method Kemal will automatically respond
+            # with the HTTP 404 Not Found status code.
+            _dbg(dbg, log, O_BRACKET + "---Any other HTTP method" + C_BRACKET)
         end
 
+        ctx.response.status_code=(status.code())
         ctx.response.content_type=(MIME_TYPE)
     end
 
@@ -130,6 +141,13 @@ module Controller
          SLASH + COLON + REST_CUST_ID + SLASH + REST_CONTACTS +
          SLASH + COLON + REST_CONT_TYPE) do |ctx|
     end
+
+    # Unused route method stubs - just to respond with HTTP 405 ---------------
+
+    post    (SLASH + ANY) do end
+    patch   (SLASH + ANY) do end
+    delete  (SLASH + ANY) do end
+    options (SLASH + ANY) do end
 
     # Off-topic ---------------------------------------------------------------
 
