@@ -23,6 +23,7 @@ module Helper
     EMPTY_STRING =  ""
     SPACE        = " "
     SLASH        = "/"
+    ANY          = "*"
     COLON        = ":"
     MINUS        = "-"
     O_BRACKET    = "["
