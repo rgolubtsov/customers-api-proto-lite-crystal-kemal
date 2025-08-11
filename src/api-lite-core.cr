@@ -73,9 +73,9 @@ _dbg(dbg, log, "#{O_BRACKET}#{cnx}#{C_BRACKET}")
    log.info{"#{MSG_SERVER_STARTED}#{server_port}"}
 Syslog.info("#{MSG_SERVER_STARTED}#{server_port}")
 
-Helper.dbg=(dbg)
-Helper.log=(log)
-Helper.cnx=(cnx)
+Helper.dbg = dbg
+Helper.log = log
+Helper.cnx = cnx
 
 require "./api-lite-controller"
 
