@@ -38,6 +38,8 @@ module Controller
                            C_BRACKET)
 
             status = HTTP::Status::METHOD_NOT_ALLOWED #< 405 Method Not Allowed
+
+            ctx.response.headers.add(HDR_ALLOW_N, HDR_ALLOW_V)
         else
             # For any other method Kemal will automatically respond
             # with the HTTP 404 Not Found status code.
@@ -152,7 +154,9 @@ module Controller
     # Off-topic ---------------------------------------------------------------
 
     get SLASH do
-        ret = EMPTY_STRING; (1 .. 79).each() do ret += MINUS end; ret += EOL
+        ret = EMPTY_STRING; (1 .. 79).each() do ret += MINUS end#; ret += EOL
+
+        ret.to_json()
     end
 end
 

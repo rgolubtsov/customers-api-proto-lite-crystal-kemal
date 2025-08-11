@@ -95,7 +95,9 @@ module Helper
     REST_CONT_TYPE = "contact_type"
 
     # HTTP response-related constants.
-    MIME_TYPE = "application/json"
+    MIME_TYPE   = "application/json"
+    HDR_ALLOW_N = "Allow"
+    HDR_ALLOW_V = "PUT, GET, HEAD"
 
     # Helper function. Used to get the daemon settings.
     def _get_settings()
