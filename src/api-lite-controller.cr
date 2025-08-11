@@ -44,8 +44,8 @@ module Controller
             _dbg(dbg, log, O_BRACKET + "---Any other HTTP method" + C_BRACKET)
         end
 
-        ctx.response.status_code=(status.code())
-        ctx.response.content_type=(MIME_TYPE)
+        ctx.response.status_code  = status.code()
+        ctx.response.content_type = MIME_TYPE
     end
 
     # The `PUT /v1/customers` endpoint.
