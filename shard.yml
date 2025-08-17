@@ -42,6 +42,7 @@ targets:
         main:       src/api-lite-core.cr
         controller: src/api-lite-controller.cr
         helper:     src/api-lite-helper.cr
+        model:      src/api-lite-model.cr
 
 # vim:set nu et ts=4 sw=4:
 ...

@@ -18,6 +18,7 @@ EXEC = $(BIN_DIR)/$(PREF)d
 DEPS = $(SRC_DIR)/$(PREF)-core.cr \
        $(SRC_DIR)/$(PREF)-controller.cr \
        $(SRC_DIR)/$(PREF)-helper.cr \
+       $(SRC_DIR)/$(PREF)-model.cr \
        shard.yml
 
 DB_PATH = data/db
