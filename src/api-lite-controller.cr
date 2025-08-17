@@ -26,24 +26,16 @@ module Controller
 
         case (method)
         when "PUT"
-            _dbg(dbg, log, O_BRACKET + "---PUT" + C_BRACKET)
-
             status = HTTP::Status::CREATED
         when "GET", "HEAD"
-            _dbg(dbg, log, O_BRACKET + "---GET, HEAD" + C_BRACKET)
-
             status = HTTP::Status::OK
         when "POST", "PATCH", "DELETE", "OPTIONS"
-            _dbg(dbg, log, O_BRACKET + "---POST, PATCH, DELETE, OPTIONS" +
-                           C_BRACKET)
-
             status = HTTP::Status::METHOD_NOT_ALLOWED #< 405 Method Not Allowed
 
             ctx.response.headers.add(HDR_ALLOW_N, HDR_ALLOW_V)
         else
             # For any other method Kemal will automatically respond
             # with the HTTP 404 Not Found status code.
-            _dbg(dbg, log, O_BRACKET + "---Any other HTTP method" + C_BRACKET)
         end
 
         ctx.response.status_code  = status.code()
