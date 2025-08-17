@@ -151,6 +151,12 @@ module Controller
     delete  (SLASH + ANY) do end
     options (SLASH + ANY) do end
 
+    # Conventional HTTP error responses ---------------------------------------
+
+    error 404 do
+        {:error => ERR_REQ_NOT_FOUND}.to_json()
+    end
+
     # Off-topic ---------------------------------------------------------------
 
     get SLASH do
