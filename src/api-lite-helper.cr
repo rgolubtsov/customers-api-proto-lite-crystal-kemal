@@ -26,6 +26,7 @@ module Helper
     ANY          = "*"
     COLON        = ":"
     MINUS        = "-"
+    V_BAR        = "|"
     O_BRACKET    = "["
     C_BRACKET    = "]"
 
