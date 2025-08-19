@@ -12,6 +12,8 @@
 
 # The controller module of the daemon -----------------------------------------
 
+require "./api-lite-model"; include Model
+
 module Controller
     dbg = Helper.dbg()
     log = Helper.log()
@@ -96,6 +98,20 @@ module Controller
     # in JSON representation, containing a list of all customer profiles.
     # May return client or server error depending on incoming request.
     get (SLASH + REST_VERSION + SLASH + REST_PREFIX) do |ctx|
+        # Retrieving all customer profiles from the database.
+        cnx.query(SQL_GET_ALL_CUSTOMERS) do |customers|
+            id   = 1
+            name = EMPTY_STRING
+
+            customers.each() do
+                id   = customers.read(Int64)
+                name = customers.read(String)
+
+                _dbg(dbg, log, "#{O_BRACKET}#{id}" + # getId()
+                                  V_BAR     + name + # getName()
+                                  C_BRACKET)
+            end
+        end
     end
 
     # The `GET /v1/customers/{customer_id}` endpoint.
