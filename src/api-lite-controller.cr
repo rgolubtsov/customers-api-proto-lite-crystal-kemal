@@ -24,7 +24,6 @@ module Controller
         status = HTTP::Status::IM_A_TEAPOT # <== HTTP 418 I'm a teapot
 
         _dbg(dbg, log, O_BRACKET + method + C_BRACKET)
-        _dbg(dbg, log, "#{O_BRACKET}#{cnx}#{C_BRACKET}")
 
         case (method)
         when "PUT"
