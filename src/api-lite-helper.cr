@@ -91,6 +91,15 @@ module Helper
     # The SQLite database connection schema.
     DB_CONN_SCHEMA = "sqlite3://"
 
+    # Checked HTTP methods.
+    HTTP_PUT     = "PUT"
+    HTTP_GET     = "GET"
+    HTTP_HEAD    = "HEAD"
+    HTTP_POST    = "POST"
+    HTTP_PATCH   = "PATCH"
+    HTTP_DELETE  = "DELETE"
+    HTTP_OPTIONS = "OPTIONS"
+
     # REST URI path-related constants.
     REST_VERSION   = "v1"
     REST_PREFIX    = "customers"

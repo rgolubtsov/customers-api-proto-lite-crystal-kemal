@@ -26,11 +26,11 @@ module Controller
         _dbg(dbg, log, O_BRACKET + method + C_BRACKET)
 
         case (method)
-        when "PUT"
+        when HTTP_PUT
             status = HTTP::Status::CREATED
-        when "GET", "HEAD"
+        when HTTP_GET, HTTP_HEAD
             status = HTTP::Status::OK
-        when "POST", "PATCH", "DELETE", "OPTIONS"
+        when HTTP_POST, HTTP_PATCH, HTTP_DELETE, HTTP_OPTIONS
             status = HTTP::Status::METHOD_NOT_ALLOWED #< 405 Method Not Allowed
 
             ctx.response.headers.add(HDR_ALLOW_N, HDR_ALLOW_V)
