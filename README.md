@@ -183,12 +183,20 @@ The microservice has the ability to log messages to a logfile and to the Unix sy
 
 ```
 $ tail -f log/customers-api-lite.log
-[2025-07-27][22:25:10] [DEBUG] [Customers API Lite]
-[2025-07-27][22:25:10] [DEBUG] [#<DB::Database:0x7dc92c47ded0>]
-[2025-07-27][22:25:10] [INFO ] Server started on port 8765
-[2025-07-27][22:25:10] [INFO ] [development] Kemal is ready to lead at http://0.0.0.0:8765
-[2025-07-27][22:25:20] [INFO ] 404 GET /v1/customers 209.23µs
-[2025-07-27][22:25:30] [INFO ] Kemal is going to take a rest!
+[2025-08-22][22:20:30] [DEBUG] [Customers API Lite]
+[2025-08-22][22:20:30] [DEBUG] [#<DB::Database:0x7676c74ebed0>]
+[2025-08-22][22:20:30] [INFO ] Server started on port 8765
+[2025-08-22][22:20:30] [INFO ] [development] Kemal is ready to lead at http://0.0.0.0:8765
+[2025-08-22][22:50:30] [DEBUG] [GET]
+[2025-08-22][22:50:30] [DEBUG] Executing query
+[2025-08-22][22:50:30] [DEBUG] [1|Jammy Jellyfish]
+[2025-08-22][22:50:30] [INFO ] 200 GET /v1/customers 847.02µs
+[2025-08-22][22:55:20] [DEBUG] [GET]
+[2025-08-22][22:55:20] [DEBUG] customer_id=2
+[2025-08-22][22:55:20] [DEBUG] Executing query
+[2025-08-22][22:55:20] [DEBUG] [2|Noble Numbat]
+[2025-08-22][22:55:20] [INFO ] 200 GET /v1/customers/2 470.44µs
+[2025-08-22][22:55:50] [INFO ] Kemal is going to take a rest!
 ```
 
 Messages registered by the Unix system logger can be seen and analyzed using the `journalctl` utility:
@@ -196,10 +204,15 @@ Messages registered by the Unix system logger can be seen and analyzed using the
 ```
 $ journalctl -f
 ...
-Jul 27 22:25:10 <hostname> api-lited[<pid>]: [Customers API Lite]
-Jul 27 22:25:10 <hostname> api-lited[<pid>]: [#<DB::Database:0x7dc92c47ded0>]
-Jul 27 22:25:10 <hostname> api-lited[<pid>]: Server started on port 8765
-Jul 27 22:25:30 <hostname> api-lited[<pid>]: Server stopped
+Aug 22 22:20:30 <hostname> api-lited[<pid>]: [Customers API Lite]
+Aug 22 22:20:30 <hostname> api-lited[<pid>]: [#<DB::Database:0x7676c74ebed0>]
+Aug 22 22:20:30 <hostname> api-lited[<pid>]: Server started on port 8765
+Aug 22 22:50:30 <hostname> api-lited[<pid>]: [GET]
+Aug 22 22:50:30 <hostname> api-lited[<pid>]: [1|Jammy Jellyfish]
+Aug 22 22:55:20 <hostname> api-lited[<pid>]: [GET]
+Aug 22 22:55:20 <hostname> api-lited[<pid>]: customer_id=2
+Aug 22 22:55:20 <hostname> api-lited[<pid>]: [2|Noble Numbat]
+Aug 22 22:55:50 <hostname> api-lited[<pid>]: Server stopped
 ```
 
 **TBD** :cd:
