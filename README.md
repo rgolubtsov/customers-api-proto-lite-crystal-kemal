@@ -123,7 +123,59 @@ No. | Endpoint name                                      | Request method and RE
 * The `{customer_contact}` placeholder is a string &mdash; it denotes a newly created customer contact (phone or email).
 * The `{contact_type}` placeholder is a string and can take one of two possible values, case-insensitive: `phone` or `email`.
 
+The following command-line snippets display the exact usage for these endpoints (the **cURL** utility is used as an example to access them)^:
+
+1. **Create customer**
+
 **TBD** :cd:
+
+2. **Create contact**
+
+**TBD** :cd:
+
+3. **List customers**
+
+```
+$ curl -v http://localhost:8765/v1/customers
+...
+> GET /v1/customers HTTP/1.1
+...
+< HTTP/1.1 200 OK
+...
+< X-Powered-By: Kemal
+< Content-Type: application/json
+...
+< Content-Length: 66
+...
+[{"id":1,"name":"Jammy Jellyfish"},{"id":2,"name":"Noble Numbat"}]
+```
+
+4. **Retrieve customer**
+
+```
+$ curl -v http://localhost:8765/v1/customers/2
+...
+> GET /v1/customers/2 HTTP/1.1
+...
+< HTTP/1.1 200 OK
+...
+< X-Powered-By: Kemal
+< Content-Type: application/json
+...
+< Content-Length: 30
+...
+{"id":2,"name":"Noble Numbat"}
+```
+
+5. **List contacts for a given customer**
+
+**TBD** :cd:
+
+6. **List contacts of a given type for a given customer**
+
+**TBD** :cd:
+
+> ^ The given names in customer accounts and in email contacts (in samples above) are for demonstrational purposes only. They have nothing common WRT any actual, ever really encountered names elsewhere.
 
 ### Logging
 
