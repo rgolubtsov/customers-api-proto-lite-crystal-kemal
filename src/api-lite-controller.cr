@@ -97,20 +97,21 @@ module Controller
     # in JSON representation, containing a list of all customer profiles.
     # May return client or server error depending on incoming request.
     get (SLASH + REST_VERSION + SLASH + REST_PREFIX) do |ctx|
+        custs = [] of Customer
+
         # Retrieving all customer profiles from the database.
         cnx.query(SQL_GET_ALL_CUSTOMERS) do |customers|
-            id   = 1
-            name = EMPTY_STRING
-
             customers.each() do
-                id   = customers.read(Int64)
-                name = customers.read(String)
-
-                _dbg(dbg, log, "#{O_BRACKET}#{id}" + # getId()
-                                  V_BAR     + name + # getName()
-                                  C_BRACKET)
+                custs << Customer.new(customers.read(Int64),
+                                      customers.read(String))
             end
         end
+
+        _dbg(dbg, log, "#{O_BRACKET}#{custs[0].id}" + # getId()
+                          V_BAR     + custs[0].name + # getName()
+                          C_BRACKET)
+
+        custs.to_json()
     end
 
     # The `GET /v1/customers/{customer_id}` endpoint.
