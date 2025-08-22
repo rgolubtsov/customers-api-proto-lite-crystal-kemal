@@ -27,6 +27,7 @@ module Helper
     COLON        = ":"
     MINUS        = "-"
     V_BAR        = "|"
+    EQUALS       = "="
     O_BRACKET    = "["
     C_BRACKET    = "]"
 
@@ -45,9 +46,13 @@ module Helper
         "due to address requested already in use. Quitting..."
     ERR_SERV_UNKNOWN_REASON =
         "for an unknown reason. Quitting..."
-    ERR_REQ_NOT_FOUND =
+    ERR_REQ_MALFORMED =
+        "HTTP 400 Bad Request: Request is malformed. Please check your inputs."
+    ERR_REQ_NOT_FOUND_1 =
         "HTTP 404 Not Found: Bad HTTP method used or no such " +
         "REST URI path exists. Please check your inputs."
+    ERR_REQ_NOT_FOUND_2 =
+        "HTTP 404 Not Found: No such customer exists."
 
     # The path and filename of the daemon settings.
     SETTINGS = "./etc/settings.conf"
