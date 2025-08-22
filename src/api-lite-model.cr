@@ -54,6 +54,17 @@ module Model
         " where"                                   +
         "      (cust.id = emails.customer_id) and" +
         "      (cust.id =                  ?)"
+
+    # The struct defining the Customer entity.
+    struct Customer
+        include JSON::Serializable
+
+        property(id   : Int64 )
+        property(name : String)
+
+        def initialize(@id, @name)
+        end
+    end
 end
 
 # vim:set nu et ts=4 sw=4:
