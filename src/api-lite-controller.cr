@@ -123,6 +123,40 @@ module Controller
     # May return client or server error depending on incoming request.
     get (SLASH + REST_VERSION + SLASH + REST_PREFIX +
          SLASH + COLON + REST_CUST_ID) do |ctx|
+
+        customer_id = ctx.params.url[REST_CUST_ID]
+
+        _dbg(dbg, log, REST_CUST_ID + EQUALS + customer_id)
+
+        # Validating the request path variable.
+        cust_id = customer_id.to_i64?()
+
+        if (cust_id == nil)
+            ctx.response.status_code = HTTP::Status::BAD_REQUEST.code()
+
+            {:error => ERR_REQ_MALFORMED}.to_json()
+        else
+            # Retrieving profile details for a given customer
+            # from the database.
+            customer = cnx.query_one(SQL_GET_CUSTOMER_BY_ID, cust_id,
+                as: {Int64, String}) rescue {0.to_i64(), EMPTY_STRING}
+
+            if (customer[0] == 0)
+                # Storing a special flag of requesting for a non-existent
+                # customer in the context storage.
+                ctx.set(REST_CUST_ID, true)
+
+                ctx.response.status_code = HTTP::Status::NOT_FOUND.code()
+            else
+                cust = Customer.new(customer[0], customer[1])
+
+                _dbg(dbg, log, "#{O_BRACKET}#{cust.id}" + # getId()
+                                  V_BAR     + cust.name + # getName()
+                                  C_BRACKET)
+
+                cust.to_json()
+            end
+        end
     end
 
     # The `GET /v1/customers/{customer_id}/contacts` endpoint.
@@ -161,8 +195,14 @@ module Controller
 
     # Conventional HTTP error responses ---------------------------------------
 
-    error 404 do
-        {:error => ERR_REQ_NOT_FOUND}.to_json()
+    error 404 do |ctx|
+        is_cust_id = ctx.get?(REST_CUST_ID)
+
+        if ((is_cust_id != nil) && is_cust_id)
+            {:error => ERR_REQ_NOT_FOUND_2}.to_json()
+        else
+            {:error => ERR_REQ_NOT_FOUND_1}.to_json()
+        end
     end
 
     # Off-topic ---------------------------------------------------------------
