@@ -1,7 +1,7 @@
 #
 # src/api-lite-controller.cr
 # =============================================================================
-# Customers API Lite microservice prototype (Crystal port). Version 0.1.5
+# Customers API Lite microservice prototype (Crystal port). Version 0.1.7
 # =============================================================================
 # A daemon written in Crystal, designed and intended to be run
 # as a microservice, implementing a special Customers API prototype
@@ -11,6 +11,8 @@
 #
 
 # The controller module of the daemon -----------------------------------------
+
+require "./api-lite-model"; include Model
 
 module Controller
     dbg = Helper.dbg()
@@ -22,14 +24,13 @@ module Controller
         status = HTTP::Status::IM_A_TEAPOT # <== HTTP 418 I'm a teapot
 
         _dbg(dbg, log, O_BRACKET + method + C_BRACKET)
-        _dbg(dbg, log, "#{O_BRACKET}#{cnx}#{C_BRACKET}")
 
         case (method)
-        when "PUT"
+        when HTTP_PUT
             status = HTTP::Status::CREATED
-        when "GET", "HEAD"
+        when HTTP_GET, HTTP_HEAD
             status = HTTP::Status::OK
-        when "POST", "PATCH", "DELETE", "OPTIONS"
+        when HTTP_POST, HTTP_PATCH, HTTP_DELETE, HTTP_OPTIONS
             status = HTTP::Status::METHOD_NOT_ALLOWED #< 405 Method Not Allowed
 
             ctx.response.headers.add(HDR_ALLOW_N, HDR_ALLOW_V)
@@ -96,6 +97,21 @@ module Controller
     # in JSON representation, containing a list of all customer profiles.
     # May return client or server error depending on incoming request.
     get (SLASH + REST_VERSION + SLASH + REST_PREFIX) do |ctx|
+        custs = [] of Customer
+
+        # Retrieving all customer profiles from the database.
+        cnx.query(SQL_GET_ALL_CUSTOMERS) do |customers|
+            customers.each() do
+                custs << Customer.new(customers.read(Int64),
+                                      customers.read(String))
+            end
+        end
+
+        _dbg(dbg, log, "#{O_BRACKET}#{custs[0].id}" + # getId()
+                          V_BAR     + custs[0].name + # getName()
+                          C_BRACKET)
+
+        custs.to_json()
     end
 
     # The `GET /v1/customers/{customer_id}` endpoint.

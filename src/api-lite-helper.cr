@@ -1,7 +1,7 @@
 #
 # src/api-lite-helper.cr
 # =============================================================================
-# Customers API Lite microservice prototype (Crystal port). Version 0.1.5
+# Customers API Lite microservice prototype (Crystal port). Version 0.1.7
 # =============================================================================
 # A daemon written in Crystal, designed and intended to be run
 # as a microservice, implementing a special Customers API prototype
@@ -26,6 +26,7 @@ module Helper
     ANY          = "*"
     COLON        = ":"
     MINUS        = "-"
+    V_BAR        = "|"
     O_BRACKET    = "["
     C_BRACKET    = "]"
 
@@ -89,6 +90,15 @@ module Helper
 
     # The SQLite database connection schema.
     DB_CONN_SCHEMA = "sqlite3://"
+
+    # Checked HTTP methods.
+    HTTP_PUT     = "PUT"
+    HTTP_GET     = "GET"
+    HTTP_HEAD    = "HEAD"
+    HTTP_POST    = "POST"
+    HTTP_PATCH   = "PATCH"
+    HTTP_DELETE  = "DELETE"
+    HTTP_OPTIONS = "OPTIONS"
 
     # REST URI path-related constants.
     REST_VERSION   = "v1"
