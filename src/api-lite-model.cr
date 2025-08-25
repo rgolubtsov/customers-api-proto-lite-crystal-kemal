@@ -65,6 +65,17 @@ module Model
         def initialize(@id, @name)
         end
     end
+
+    # The struct defining the Contact entity.
+    struct Contact
+        include JSON::Serializable
+
+        property(contact     : String)
+        property(customer_id : String)
+
+        def initialize(@contact, @customer_id = EMPTY_STRING)
+        end
+    end
 end
 
 # vim:set nu et ts=4 sw=4:
