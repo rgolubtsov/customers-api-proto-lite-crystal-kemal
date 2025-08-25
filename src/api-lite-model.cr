@@ -1,7 +1,7 @@
 #
 # src/api-lite-model.cr
 # =============================================================================
-# Customers API Lite microservice prototype (Crystal port). Version 0.1.7
+# Customers API Lite microservice prototype (Crystal port). Version 0.1.8
 # =============================================================================
 # A daemon written in Crystal, designed and intended to be run
 # as a microservice, implementing a special Customers API prototype
@@ -63,6 +63,19 @@ module Model
         property(name : String)
 
         def initialize(@id, @name)
+        end
+    end
+
+    # The struct defining the Contact entity.
+    struct Contact
+        include JSON::Serializable
+
+        property(contact     : String)
+
+        @[JSON::Field(ignore_serialize: true)]
+        property(customer_id : String)
+
+        def initialize(@contact, @customer_id = EMPTY_STRING)
         end
     end
 end

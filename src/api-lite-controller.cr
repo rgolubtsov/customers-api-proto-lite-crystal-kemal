@@ -1,7 +1,7 @@
 #
 # src/api-lite-controller.cr
 # =============================================================================
-# Customers API Lite microservice prototype (Crystal port). Version 0.1.7
+# Customers API Lite microservice prototype (Crystal port). Version 0.1.8
 # =============================================================================
 # A daemon written in Crystal, designed and intended to be run
 # as a microservice, implementing a special Customers API prototype
@@ -170,6 +170,46 @@ module Controller
     # May return client or server error depending on incoming request.
     get (SLASH + REST_VERSION + SLASH + REST_PREFIX +
          SLASH + COLON + REST_CUST_ID + SLASH + REST_CONTACTS) do |ctx|
+
+        customer_id = ctx.params.url[REST_CUST_ID]
+
+        _dbg(dbg, log, REST_CUST_ID + EQUALS + customer_id)
+
+        # Validating the request path variable.
+        cust_id = customer_id.to_i64?()
+
+        if (cust_id == nil)
+            ctx.response.status_code = HTTP::Status::BAD_REQUEST.code()
+
+            {:error => ERR_REQ_MALFORMED}.to_json()
+        else
+            conts = [] of Contact
+
+            # Retrieving all contacts associated with a given customer
+            # from the database.
+            cnx.query(SQL_GET_ALL_CONTACTS,
+                cust_id, # <== For retrieving phones.
+                cust_id  # <== For retrieving emails.
+            ) do |contacts|
+                contacts.each() do
+                    conts << Contact.new(contacts.read(String))
+                end
+            end
+
+            if (conts.size() == 0)
+                # Storing a special flag in the context storage when there are
+                # no contacts belonging to a given customer exist, or there is
+                # no customer with such ID.
+                ctx.set(REST_CONTACTS, true)
+
+                ctx.response.status_code = HTTP::Status::NOT_FOUND.code()
+            else
+                _dbg(dbg, log, O_BRACKET + conts[0].contact + # getContact()
+                               C_BRACKET)
+
+                conts.to_json()
+            end
+        end
     end
 
     # The `GET /v1/customers/{customer_id}/contacts/{contact_type}` endpoint.
@@ -196,10 +236,13 @@ module Controller
     # Conventional HTTP error responses ---------------------------------------
 
     error 404 do |ctx|
-        is_cust_id = ctx.get?(REST_CUST_ID)
+        is_cust_id  = ctx.get?(REST_CUST_ID)
+        is_contacts = ctx.get?(REST_CONTACTS)
 
-        if ((is_cust_id != nil) && is_cust_id)
+           if ((is_cust_id  != nil) && is_cust_id)
             {:error => ERR_REQ_NOT_FOUND_2}.to_json()
+        elsif ((is_contacts != nil) && is_contacts)
+            {:error => ERR_REQ_NOT_FOUND_3}.to_json()
         else
             {:error => ERR_REQ_NOT_FOUND_1}.to_json()
         end

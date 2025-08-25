@@ -1,7 +1,7 @@
 #
 # src/api-lite-helper.cr
 # =============================================================================
-# Customers API Lite microservice prototype (Crystal port). Version 0.1.7
+# Customers API Lite microservice prototype (Crystal port). Version 0.1.8
 # =============================================================================
 # A daemon written in Crystal, designed and intended to be run
 # as a microservice, implementing a special Customers API prototype
@@ -53,6 +53,9 @@ module Helper
         "REST URI path exists. Please check your inputs."
     ERR_REQ_NOT_FOUND_2 =
         "HTTP 404 Not Found: No such customer exists."
+    ERR_REQ_NOT_FOUND_3 =
+        "HTTP 404 Not Found: No contacts belonging to a given customer " +
+        "exist, or no such customer exists."
 
     # The path and filename of the daemon settings.
     SETTINGS = "./etc/settings.conf"
