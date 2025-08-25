@@ -53,6 +53,9 @@ module Helper
         "REST URI path exists. Please check your inputs."
     ERR_REQ_NOT_FOUND_2 =
         "HTTP 404 Not Found: No such customer exists."
+    ERR_REQ_NOT_FOUND_3 =
+        "HTTP 404 Not Found: No contacts belonging to a given customer " +
+        "exist, or no such customer exists."
 
     # The path and filename of the daemon settings.
     SETTINGS = "./etc/settings.conf"
