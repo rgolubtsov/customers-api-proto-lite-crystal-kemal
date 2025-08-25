@@ -71,6 +71,8 @@ module Model
         include JSON::Serializable
 
         property(contact     : String)
+
+        @[JSON::Field(ignore_serialize: true)]
         property(customer_id : String)
 
         def initialize(@contact, @customer_id = EMPTY_STRING)
