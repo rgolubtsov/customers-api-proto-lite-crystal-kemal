@@ -224,6 +224,21 @@ module Controller
     get (SLASH + REST_VERSION + SLASH + REST_PREFIX +
          SLASH + COLON + REST_CUST_ID + SLASH + REST_CONTACTS +
          SLASH + COLON + REST_CONT_TYPE) do |ctx|
+
+        customer_id  = ctx.params.url[REST_CUST_ID]
+        contact_type = ctx.params.url[REST_CONT_TYPE]
+
+        _dbg(dbg, log, REST_CUST_ID   + EQUALS + customer_id + SPACE + V_BAR +
+               SPACE + REST_CONT_TYPE + EQUALS + contact_type)
+
+        # Validating the request path variable {customer_id}.
+        cust_id = customer_id.to_i64?()
+
+        if (cust_id == nil)
+            ctx.response.status_code = HTTP::Status::BAD_REQUEST.code()
+
+            {:error => ERR_REQ_MALFORMED}.to_json()
+        end
     end
 
     # Unused route method stubs - just to respond with HTTP 405 ---------------
