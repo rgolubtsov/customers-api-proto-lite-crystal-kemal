@@ -55,6 +55,28 @@ module Model
         "      (cust.id = emails.customer_id) and" +
         "      (cust.id =                  ?)"
 
+    # The SQL queries for retrieving all contacts of a given type
+    # for a given customer.
+    #
+    # Used by the `GET /v1/customers/{customer_id}/contacts/{contact_type}`
+    # REST endpoint.
+    SQL_GET_CONTACTS_BY_TYPE =
+       ["select phones.contact"                    + # as 'Phone(s)'
+        " from"                                    +
+        "       contact_phones phones,"            +
+        "       customers      cust"               +
+        " where"                                   +
+        "      (cust.id = phones.customer_id) and" +
+        "      (cust.id =                  ?)",
+        "select emails.contact"                    + # as 'Email(s)'
+        " from"                                    +
+        "       contact_emails emails,"            +
+        "       customers      cust"               +
+        " where"                                   +
+        "      (cust.id = emails.customer_id) and" +
+        "      (cust.id =                  ?)",
+        "select name from customers where (id = ?)"]
+
     # The struct defining the Customer entity.
     struct Customer
         include JSON::Serializable
