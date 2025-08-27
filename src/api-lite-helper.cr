@@ -114,6 +114,8 @@ module Helper
     REST_CUST_ID   = "customer_id"
     REST_CONTACTS  = "contacts"
     REST_CONT_TYPE = "contact_type"
+    PHONE          = "phone"
+    EMAIL          = "email"
 
     # HTTP response-related constants.
     MIME_TYPE   = "application/json"

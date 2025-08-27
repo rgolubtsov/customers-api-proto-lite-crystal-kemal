@@ -238,6 +238,38 @@ module Controller
             ctx.response.status_code = HTTP::Status::BAD_REQUEST.code()
 
             {:error => ERR_REQ_MALFORMED}.to_json()
+        else
+            sql_query = SQL_GET_CONTACTS_BY_TYPE[2]
+
+               if ((contact_type == PHONE) || (contact_type == PHONE.upcase()))
+                sql_query = SQL_GET_CONTACTS_BY_TYPE[0]
+            elsif ((contact_type == EMAIL) || (contact_type == EMAIL.upcase()))
+                sql_query = SQL_GET_CONTACTS_BY_TYPE[1]
+            end
+
+            conts = [] of Contact
+
+            # Retrieving all contacts of a given type associated
+            # with a given customer from the database.
+            cnx.query(sql_query, cust_id) do |contacts|
+                contacts.each() do
+                    conts << Contact.new(contacts.read(String))
+                end
+            end
+
+            if (conts.size() == 0)
+                # Storing a special flag in the context storage when there are
+                # no contacts of a given type belonging to a given customer
+                # exist, or there is no customer with such ID.
+                ctx.set(REST_CONTACTS, true)
+
+                ctx.response.status_code = HTTP::Status::NOT_FOUND.code()
+            else
+                _dbg(dbg, log, O_BRACKET + conts[0].contact + # getContact()
+                               C_BRACKET)
+
+                conts.to_json()
+            end
         end
     end
 
