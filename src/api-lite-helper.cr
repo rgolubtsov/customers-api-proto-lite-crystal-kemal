@@ -1,7 +1,7 @@
 #
 # src/api-lite-helper.cr
 # =============================================================================
-# Customers API Lite microservice prototype (Crystal port). Version 0.1.8
+# Customers API Lite microservice prototype (Crystal port). Version 0.1.9
 # =============================================================================
 # A daemon written in Crystal, designed and intended to be run
 # as a microservice, implementing a special Customers API prototype
@@ -114,6 +114,8 @@ module Helper
     REST_CUST_ID   = "customer_id"
     REST_CONTACTS  = "contacts"
     REST_CONT_TYPE = "contact_type"
+    PHONE          = "phone"
+    EMAIL          = "email"
 
     # HTTP response-related constants.
     MIME_TYPE   = "application/json"

@@ -187,7 +187,37 @@ $ curl -v http://localhost:8765/v1/customers/2/contacts
 
 6. **List contacts of a given type for a given customer**
 
-**TBD** :cd:
+```
+$ curl -v http://localhost:8765/v1/customers/2/contacts/phone
+...
+> GET /v1/customers/2/contacts/phone HTTP/1.1
+...
+< HTTP/1.1 200 OK
+...
+< X-Powered-By: Kemal
+< Content-Type: application/json
+...
+< Content-Length: 88
+...
+[{"contact":"+35760X123456"},{"contact":"+35760Y1234578"},{"contact":"+35790Z12345890"}]
+```
+
+Or list **email** contacts:
+
+```
+$ curl -v http://localhost:8765/v1/customers/2/contacts/email
+...
+> GET /v1/customers/2/contacts/email HTTP/1.1
+...
+< HTTP/1.1 200 OK
+...
+< X-Powered-By: Kemal
+< Content-Type: application/json
+...
+< Content-Length: 103
+...
+[{"contact":"noble.numbat@example.com"},{"contact":"nnumbat@example.com"},{"contact":"nn@example.org"}]
+```
 
 > ^ The given names in customer accounts and in email contacts (in samples above) are for demonstrational purposes only. They have nothing common WRT any actual, ever really encountered names elsewhere.
 
@@ -197,20 +227,35 @@ The microservice has the ability to log messages to a logfile and to the Unix sy
 
 ```
 $ tail -f log/customers-api-lite.log
-[2025-08-22][22:20:30] [DEBUG] [Customers API Lite]
-[2025-08-22][22:20:30] [DEBUG] [#<DB::Database:0x7676c74ebed0>]
-[2025-08-22][22:20:30] [INFO ] Server started on port 8765
-[2025-08-22][22:20:30] [INFO ] [development] Kemal is ready to lead at http://0.0.0.0:8765
-[2025-08-22][22:50:30] [DEBUG] [GET]
-[2025-08-22][22:50:30] [DEBUG] Executing query
-[2025-08-22][22:50:30] [DEBUG] [1|Jammy Jellyfish]
-[2025-08-22][22:50:30] [INFO ] 200 GET /v1/customers 847.02µs
-[2025-08-22][22:55:20] [DEBUG] [GET]
-[2025-08-22][22:55:20] [DEBUG] customer_id=2
-[2025-08-22][22:55:20] [DEBUG] Executing query
-[2025-08-22][22:55:20] [DEBUG] [2|Noble Numbat]
-[2025-08-22][22:55:20] [INFO ] 200 GET /v1/customers/2 470.44µs
-[2025-08-22][22:55:50] [INFO ] Kemal is going to take a rest!
+[2025-08-28][23:00:10] [DEBUG] [Customers API Lite]
+[2025-08-28][23:00:10] [DEBUG] [#<DB::Database:0x7b1ba23eeed0>]
+[2025-08-28][23:00:10] [INFO ] Server started on port 8765
+[2025-08-28][23:00:10] [INFO ] [development] Kemal is ready to lead at http://0.0.0.0:8765
+[2025-08-28][23:00:20] [DEBUG] [GET]
+[2025-08-28][23:00:20] [DEBUG] Executing query
+[2025-08-28][23:00:20] [DEBUG] [1|Jammy Jellyfish]
+[2025-08-28][23:00:20] [INFO ] 200 GET /v1/customers 1.13ms
+[2025-08-28][23:00:30] [DEBUG] [GET]
+[2025-08-28][23:00:30] [DEBUG] customer_id=2
+[2025-08-28][23:00:30] [DEBUG] Executing query
+[2025-08-28][23:00:30] [DEBUG] [2|Noble Numbat]
+[2025-08-28][23:00:30] [INFO ] 200 GET /v1/customers/2 511.14µs
+[2025-08-28][23:00:35] [DEBUG] [GET]
+[2025-08-28][23:00:35] [DEBUG] customer_id=2
+[2025-08-28][23:00:35] [DEBUG] Executing query
+[2025-08-28][23:00:35] [DEBUG] [+35760X123456]
+[2025-08-28][23:00:35] [INFO ] 200 GET /v1/customers/2/contacts 1.06ms
+[2025-08-28][23:00:45] [DEBUG] [GET]
+[2025-08-28][23:00:45] [DEBUG] customer_id=2 | contact_type=phone
+[2025-08-28][23:00:45] [DEBUG] Executing query
+[2025-08-28][23:00:45] [DEBUG] [+35760X123456]
+[2025-08-28][23:00:45] [INFO ] 200 GET /v1/customers/2/contacts/phone 664.53µs
+[2025-08-28][23:00:55] [DEBUG] [GET]
+[2025-08-28][23:00:55] [DEBUG] customer_id=2 | contact_type=email
+[2025-08-28][23:00:55] [DEBUG] Executing query
+[2025-08-28][23:00:55] [DEBUG] [noble.numbat@example.com]
+[2025-08-28][23:00:55] [INFO ] 200 GET /v1/customers/2/contacts/email 589.74µs
+[2025-08-28][23:01:10] [INFO ] Kemal is going to take a rest!
 ```
 
 Messages registered by the Unix system logger can be seen and analyzed using the `journalctl` utility:
@@ -218,15 +263,24 @@ Messages registered by the Unix system logger can be seen and analyzed using the
 ```
 $ journalctl -f
 ...
-Aug 22 22:20:30 <hostname> api-lited[<pid>]: [Customers API Lite]
-Aug 22 22:20:30 <hostname> api-lited[<pid>]: [#<DB::Database:0x7676c74ebed0>]
-Aug 22 22:20:30 <hostname> api-lited[<pid>]: Server started on port 8765
-Aug 22 22:50:30 <hostname> api-lited[<pid>]: [GET]
-Aug 22 22:50:30 <hostname> api-lited[<pid>]: [1|Jammy Jellyfish]
-Aug 22 22:55:20 <hostname> api-lited[<pid>]: [GET]
-Aug 22 22:55:20 <hostname> api-lited[<pid>]: customer_id=2
-Aug 22 22:55:20 <hostname> api-lited[<pid>]: [2|Noble Numbat]
-Aug 22 22:55:50 <hostname> api-lited[<pid>]: Server stopped
+Aug 28 23:00:10 <hostname> api-lited[<pid>]: [Customers API Lite]
+Aug 28 23:00:10 <hostname> api-lited[<pid>]: [#<DB::Database:0x7b1ba23eeed0>]
+Aug 28 23:00:10 <hostname> api-lited[<pid>]: Server started on port 8765
+Aug 28 23:00:20 <hostname> api-lited[<pid>]: [GET]
+Aug 28 23:00:20 <hostname> api-lited[<pid>]: [1|Jammy Jellyfish]
+Aug 28 23:00:30 <hostname> api-lited[<pid>]: [GET]
+Aug 28 23:00:30 <hostname> api-lited[<pid>]: customer_id=2
+Aug 28 23:00:30 <hostname> api-lited[<pid>]: [2|Noble Numbat]
+Aug 28 23:00:35 <hostname> api-lited[<pid>]: [GET]
+Aug 28 23:00:35 <hostname> api-lited[<pid>]: customer_id=2
+Aug 28 23:00:35 <hostname> api-lited[<pid>]: [+35760X123456]
+Aug 28 23:00:45 <hostname> api-lited[<pid>]: [GET]
+Aug 28 23:00:45 <hostname> api-lited[<pid>]: customer_id=2 | contact_type=phone
+Aug 28 23:00:45 <hostname> api-lited[<pid>]: [+35760X123456]
+Aug 28 23:00:55 <hostname> api-lited[<pid>]: [GET]
+Aug 28 23:00:55 <hostname> api-lited[<pid>]: customer_id=2 | contact_type=email
+Aug 28 23:00:55 <hostname> api-lited[<pid>]: [noble.numbat@example.com]
+Aug 28 23:01:10 <hostname> api-lited[<pid>]: Server stopped
 ```
 
 **TBD** :cd:

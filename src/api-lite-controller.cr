@@ -1,7 +1,7 @@
 #
 # src/api-lite-controller.cr
 # =============================================================================
-# Customers API Lite microservice prototype (Crystal port). Version 0.1.8
+# Customers API Lite microservice prototype (Crystal port). Version 0.1.9
 # =============================================================================
 # A daemon written in Crystal, designed and intended to be run
 # as a microservice, implementing a special Customers API prototype
@@ -224,6 +224,53 @@ module Controller
     get (SLASH + REST_VERSION + SLASH + REST_PREFIX +
          SLASH + COLON + REST_CUST_ID + SLASH + REST_CONTACTS +
          SLASH + COLON + REST_CONT_TYPE) do |ctx|
+
+        customer_id  = ctx.params.url[REST_CUST_ID]
+        contact_type = ctx.params.url[REST_CONT_TYPE]
+
+        _dbg(dbg, log, REST_CUST_ID   + EQUALS + customer_id + SPACE + V_BAR +
+               SPACE + REST_CONT_TYPE + EQUALS + contact_type)
+
+        # Validating the request path variable {customer_id}.
+        cust_id = customer_id.to_i64?()
+
+        if (cust_id == nil)
+            ctx.response.status_code = HTTP::Status::BAD_REQUEST.code()
+
+            {:error => ERR_REQ_MALFORMED}.to_json()
+        else
+            sql_query = SQL_GET_CONTACTS_BY_TYPE[2]
+
+               if ((contact_type == PHONE) || (contact_type == PHONE.upcase()))
+                sql_query = SQL_GET_CONTACTS_BY_TYPE[0]
+            elsif ((contact_type == EMAIL) || (contact_type == EMAIL.upcase()))
+                sql_query = SQL_GET_CONTACTS_BY_TYPE[1]
+            end
+
+            conts = [] of Contact
+
+            # Retrieving all contacts of a given type associated
+            # with a given customer from the database.
+            cnx.query(sql_query, cust_id) do |contacts|
+                contacts.each() do
+                    conts << Contact.new(contacts.read(String))
+                end
+            end
+
+            if (conts.size() == 0)
+                # Storing a special flag in the context storage when there are
+                # no contacts of a given type belonging to a given customer
+                # exist, or there is no customer with such ID.
+                ctx.set(REST_CONTACTS, true)
+
+                ctx.response.status_code = HTTP::Status::NOT_FOUND.code()
+            else
+                _dbg(dbg, log, O_BRACKET + conts[0].contact + # getContact()
+                               C_BRACKET)
+
+                conts.to_json()
+            end
+        end
     end
 
     # Unused route method stubs - just to respond with HTTP 405 ---------------
