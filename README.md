@@ -108,7 +108,7 @@ $ ./bin/api-lited > /dev/null 2>&1 &
 
 ## Consuming
 
-The microservice should expose **six REST API endpoints** to web clients... They are all intended to deal with customer entities and/or contact entities that belong to customer profiles. The following table displays their syntax:
+The microservice *should* expose **six REST API endpoints** to web clients... They are all intended to deal with customer entities and/or contact entities that belong to customer profiles. The following table displays their syntax:
 
 No. | Endpoint name                                      | Request method and REST URI                                   | Request body
 --: | -------------------------------------------------- | ------------------------------------------------------------- | ----------------------------------------------------------------
