@@ -13,6 +13,20 @@
 # The model module of the daemon ----------------------------------------------
 
 module Model
+    # The SQL query for creating a new customer
+    # (putting customer data to the database).
+    #
+    # Used by the `PUT /v1/customers` REST endpoint.
+    SQL_PUT_CUSTOMER = "insert into customers (name) values (?)"
+
+    # The SQL queries for creating a new contact for a given customer
+    # (putting a contact regarding a given customer to the database).
+    #
+    # Used by the `PUT /v1/customers/contacts` REST endpoint.
+    SQL_PUT_CONTACT =
+       ["insert into contact_phones (contact, customer_id) values (?, ?)",
+        "insert into contact_emails (contact, customer_id) values (?, ?)"]
+
     # The SQL query for retrieving all customer profiles.
     #
     # Used by the `GET /v1/customers` REST endpoint.
