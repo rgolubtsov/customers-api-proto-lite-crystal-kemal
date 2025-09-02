@@ -62,6 +62,11 @@ module Controller
     # containing profile details of a newly created customer.
     # May return client or server error depending on incoming request.
     put (SLASH + REST_VERSION + SLASH + REST_PREFIX) do |ctx|
+        payload = ctx.request.body.not_nil!()
+
+        customer = JSON.parse(payload)
+
+        _dbg(dbg, log, O_BRACKET + customer["name"].as_s() + C_BRACKET)
     end
 
     # The `PUT /v1/customers/contacts` endpoint.
