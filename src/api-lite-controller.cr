@@ -1,7 +1,7 @@
 #
 # src/api-lite-controller.cr
 # =============================================================================
-# Customers API Lite microservice prototype (Crystal port). Version 0.1.9
+# Customers API Lite microservice prototype (Crystal port). Version 0.1.10
 # =============================================================================
 # A daemon written in Crystal, designed and intended to be run
 # as a microservice, implementing a special Customers API prototype
@@ -64,9 +64,38 @@ module Controller
     put (SLASH + REST_VERSION + SLASH + REST_PREFIX) do |ctx|
         payload = ctx.request.body.not_nil!()
 
-        customer = JSON.parse(payload)
+        customer : JSON::Any
 
-        _dbg(dbg, log, O_BRACKET + customer["name"].as_s() + C_BRACKET)
+        # Trying to parse and validate the request payload.
+        begin
+            customer = JSON.parse(payload)
+        rescue
+            ctx.response.status_code = HTTP::Status::BAD_REQUEST.code()
+
+            {:error => ERR_REQ_MALFORMED}.to_json()
+        else
+            customer_name = customer["name"].as_s()
+
+            _dbg(dbg, log, O_BRACKET + customer_name + C_BRACKET)
+
+            # Creating a new customer (putting customer data to the database).
+            cnx.exec(SQL_PUT_CUSTOMER, customer_name)
+
+            customer_ = cnx.query_one(SQL_GET_ALL_CUSTOMERS + SQL_DESC_LIMIT_1,
+                as: {Int64, String})
+
+            cust = Customer.new(customer_[0], customer_[1])
+
+            _dbg(dbg, log, "#{O_BRACKET}#{cust.id}" + # getId()
+                              V_BAR     + cust.name + # getName()
+                              C_BRACKET)
+
+            ctx.response.headers.add(HDR_LOCATION_N, SLASH + REST_VERSION +
+                                                     SLASH + REST_PREFIX  +
+                                                  "#{SLASH}#{cust.id}")#getId()
+
+            cust.to_json()
+        end
     end
 
     # The `PUT /v1/customers/contacts` endpoint.

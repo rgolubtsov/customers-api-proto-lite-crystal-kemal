@@ -1,7 +1,7 @@
 #
 # src/api-lite-model.cr
 # =============================================================================
-# Customers API Lite microservice prototype (Crystal port). Version 0.1.9
+# Customers API Lite microservice prototype (Crystal port). Version 0.1.10
 # =============================================================================
 # A daemon written in Crystal, designed and intended to be run
 # as a microservice, implementing a special Customers API prototype
@@ -90,6 +90,10 @@ module Model
         "      (cust.id = emails.customer_id) and" +
         "      (cust.id =                  ?)",
         "select name from customers where (id = ?)"]
+
+    # The terminating part of an SQL query,
+    # used to retrieve the last record created.
+    SQL_DESC_LIMIT_1 = " desc limit 1"
 
     # The struct defining the Customer entity.
     struct Customer
