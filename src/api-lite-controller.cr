@@ -121,6 +121,46 @@ module Controller
     # May return client or server error depending on incoming request.
     put (SLASH + REST_VERSION + SLASH + REST_PREFIX +
          SLASH + REST_CONTACTS) do |ctx|
+
+        payload = ctx.request.body.not_nil!()
+
+        contact : JSON::Any
+
+        # Trying to parse and validate the request payload.
+        begin
+            contact = JSON.parse(payload)
+        rescue
+            ctx.response.status_code = HTTP::Status::BAD_REQUEST.code()
+
+            {:error => ERR_REQ_MALFORMED}.to_json()
+        else
+            contact_cust_id = contact["customer_id"].as_s()
+            contact_contact = contact["contact"    ].as_s()
+
+            _dbg(dbg, log, REST_CUST_ID + EQUALS + contact_cust_id)
+            _dbg(dbg, log, O_BRACKET + contact_contact + C_BRACKET)
+
+            # Parsing and validating a customer contact: phone or email.
+            contact_type = _parse_contact(contact_contact)
+
+            if (contact_type == SPACE)
+                ctx.response.status_code = HTTP::Status::BAD_REQUEST.code()
+
+                {:error => ERR_REQ_MALFORMED}.to_json()
+            else
+                sql_query = SQL_PUT_CONTACT[1]
+
+                   if (contact_type == PHONE)
+                    sql_query = SQL_PUT_CONTACT[0]
+                elsif (contact_type == EMAIL)
+                    sql_query = SQL_PUT_CONTACT[1]
+                end
+
+                # Creating a new contact (putting a contact regarding
+                # a given customer to the database).
+                cnx.exec(sql_query, contact_contact, contact_cust_id)
+            end
+        end
     end
 
     # The `GET /v1/customers` endpoint.
@@ -336,6 +376,17 @@ module Controller
 
         ret.to_json()
     end
+end
+
+# Helper function. Used to parse and validate a customer contact.
+#                  Returns the type of contact: phone or email.
+private def _parse_contact(contact)
+    phone_regex = Regex.literal(PHONE_REGEX, i: true)
+    email_regex = Regex.literal(EMAIL_REGEX, i: true)
+
+       if (phone_regex.match(contact) != nil) PHONE
+    elsif (email_regex.match(contact) != nil) EMAIL
+    else SPACE end
 end
 
 # vim:set nu et ts=4 sw=4:
