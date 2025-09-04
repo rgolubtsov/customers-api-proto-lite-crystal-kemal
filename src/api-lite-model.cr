@@ -91,6 +91,10 @@ module Model
         "      (cust.id =                  ?)",
         "select name from customers where (id = ?)"]
 
+    # The terminating part of an SQL query,
+    # used to retrieve the last record created.
+    SQL_DESC_LIMIT_1 = " desc limit 1"
+
     # The struct defining the Customer entity.
     struct Customer
         include JSON::Serializable
