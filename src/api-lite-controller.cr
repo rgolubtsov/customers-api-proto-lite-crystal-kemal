@@ -64,9 +64,17 @@ module Controller
     put (SLASH + REST_VERSION + SLASH + REST_PREFIX) do |ctx|
         payload = ctx.request.body.not_nil!()
 
-        customer = JSON.parse(payload)
+        customer : JSON::Any
 
-        _dbg(dbg, log, O_BRACKET + customer["name"].as_s() + C_BRACKET)
+        begin
+            customer = JSON.parse(payload)
+        rescue
+            ctx.response.status_code = HTTP::Status::BAD_REQUEST.code()
+
+            {:error => ERR_REQ_MALFORMED}.to_json()
+        else
+            _dbg(dbg, log, O_BRACKET + customer["name"].as_s() + C_BRACKET)
+        end
     end
 
     # The `PUT /v1/customers/contacts` endpoint.
