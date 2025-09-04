@@ -128,7 +128,26 @@ The following command-line snippets display the exact usage for these endpoints 
 
 1. **Create customer**
 
-**TBD** :cd:
+```
+$ curl -vXPUT http://localhost:8765/v1/customers \
+       -H 'content-type: application/json' \
+       -d '{"name":"Jamison Palmer"}'
+...
+> PUT /v1/customers HTTP/1.1
+...
+> content-type: application/json
+> Content-Length: 25
+...
+< HTTP/1.1 201 Created
+...
+< X-Powered-By: Kemal
+< Content-Type: application/json
+...
+< Location: /v1/customers/3
+< Content-Length: 32
+...
+{"id":3,"name":"Jamison Palmer"}
+```
 
 2. **Create contact**
 
@@ -146,26 +165,26 @@ $ curl -v http://localhost:8765/v1/customers
 < X-Powered-By: Kemal
 < Content-Type: application/json
 ...
-< Content-Length: 66
+< Content-Length: 99
 ...
-[{"id":1,"name":"Jammy Jellyfish"},{"id":2,"name":"Noble Numbat"}]
+[{"id":1,"name":"Jammy Jellyfish"},{"id":2,"name":"Noble Numbat"},{"id":3,"name":"Jamison Palmer"}]
 ```
 
 4. **Retrieve customer**
 
 ```
-$ curl -v http://localhost:8765/v1/customers/2
+$ curl -v http://localhost:8765/v1/customers/3
 ...
-> GET /v1/customers/2 HTTP/1.1
+> GET /v1/customers/3 HTTP/1.1
 ...
 < HTTP/1.1 200 OK
 ...
 < X-Powered-By: Kemal
 < Content-Type: application/json
 ...
-< Content-Length: 30
+< Content-Length: 32
 ...
-{"id":2,"name":"Noble Numbat"}
+{"id":3,"name":"Jamison Palmer"}
 ```
 
 5. **List contacts for a given customer**
