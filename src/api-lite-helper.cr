@@ -123,6 +123,10 @@ module Helper
     HDR_ALLOW_V    = "PUT, GET, HEAD"
     HDR_LOCATION_N = "Location"
 
+    # Regex patterns for contact phones and emails.
+    PHONE_REGEX = "^\\+\\d{9,14}"
+    EMAIL_REGEX = ".{1,63}@.{3,190}"
+
     # Helper function. Used to get the daemon settings.
     def _get_settings()
         settings = TOML.parse(File.read(SETTINGS))
