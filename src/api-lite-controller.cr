@@ -150,15 +150,59 @@ module Controller
             else
                 sql_query = SQL_PUT_CONTACT[1]
 
-                   if (contact_type == PHONE)
+                   if ((contact_type == PHONE) ||
+                       (contact_type == PHONE.upcase()))
+
                     sql_query = SQL_PUT_CONTACT[0]
-                elsif (contact_type == EMAIL)
+                elsif ((contact_type == EMAIL) ||
+                       (contact_type == EMAIL.upcase()))
+
                     sql_query = SQL_PUT_CONTACT[1]
                 end
 
                 # Creating a new contact (putting a contact regarding
                 # a given customer to the database).
                 cnx.exec(sql_query, contact_contact, contact_cust_id)
+
+                sql_query_ = SQL_GET_CONTACTS_BY_TYPE[2]
+
+                   if ((contact_type == PHONE) ||
+                       (contact_type == PHONE.upcase()))
+
+                    sql_query_ = SQL_GET_CONTACTS_BY_TYPE[0] +
+                                 SQL_ORDER_CONTACTS_BY_ID[0]
+                elsif ((contact_type == EMAIL) ||
+                       (contact_type == EMAIL.upcase()))
+
+                    sql_query_ = SQL_GET_CONTACTS_BY_TYPE[1] +
+                                 SQL_ORDER_CONTACTS_BY_ID[1]
+                end
+
+                begin
+                    contact_ = cnx.query_one(sql_query_ + SQL_DESC_LIMIT_1,
+                        contact_cust_id, as: String)
+                rescue e: DB::NoResultsError
+                    # Storing a special flag of requesting for a non-existent
+                    # customer in the context storage.
+                    ctx.set(REST_CUST_ID, true)
+
+                    ctx.response.status_code = HTTP::Status::NOT_FOUND.code()
+                else
+                    cont = Contact.new(contact_)
+
+                    _dbg(dbg, log, O_BRACKET + contact_type +
+                                   V_BAR     + cont.contact + # getContact()
+                                   C_BRACKET)
+
+                    ctx.response.headers.add(HDR_LOCATION_N,
+                                             SLASH + REST_VERSION    +
+                                             SLASH + REST_PREFIX     +
+                                             SLASH + contact_cust_id +
+                                             SLASH + REST_CONTACTS   +
+                                             SLASH + contact_type)
+
+                    cont.to_json()
+                end
             end
         end
     end
