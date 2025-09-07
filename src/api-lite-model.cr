@@ -91,6 +91,12 @@ module Model
         "      (cust.id =                  ?)",
         "select name from customers where (id = ?)"]
 
+    # The intermediate part of an SQL query,
+    # used to order contact records by ID.
+    SQL_ORDER_CONTACTS_BY_ID =
+       [" order by phones.id",
+        " order by emails.id"]
+
     # The terminating part of an SQL query,
     # used to retrieve the last record created.
     SQL_DESC_LIMIT_1 = " desc limit 1"
