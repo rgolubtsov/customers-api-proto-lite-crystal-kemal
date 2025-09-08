@@ -1,7 +1,7 @@
 #
 # src/api-lite-model.cr
 # =============================================================================
-# Customers API Lite microservice prototype (Crystal port). Version 0.1.10
+# Customers API Lite microservice prototype (Crystal port). Version 0.1.12
 # =============================================================================
 # A daemon written in Crystal, designed and intended to be run
 # as a microservice, implementing a special Customers API prototype
@@ -90,6 +90,12 @@ module Model
         "      (cust.id = emails.customer_id) and" +
         "      (cust.id =                  ?)",
         "select name from customers where (id = ?)"]
+
+    # The intermediate part of an SQL query,
+    # used to order contact records by ID.
+    SQL_ORDER_CONTACTS_BY_ID =
+       [" order by phones.id",
+        " order by emails.id"]
 
     # The terminating part of an SQL query,
     # used to retrieve the last record created.

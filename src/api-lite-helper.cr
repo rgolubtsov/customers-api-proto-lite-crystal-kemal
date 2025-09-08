@@ -1,7 +1,7 @@
 #
 # src/api-lite-helper.cr
 # =============================================================================
-# Customers API Lite microservice prototype (Crystal port). Version 0.1.10
+# Customers API Lite microservice prototype (Crystal port). Version 0.1.12
 # =============================================================================
 # A daemon written in Crystal, designed and intended to be run
 # as a microservice, implementing a special Customers API prototype
@@ -122,6 +122,10 @@ module Helper
     HDR_ALLOW_N    = "Allow"
     HDR_ALLOW_V    = "PUT, GET, HEAD"
     HDR_LOCATION_N = "Location"
+
+    # Regex patterns for contact phones and emails.
+    PHONE_REGEX = "^\\+\\d{9,14}"
+    EMAIL_REGEX = ".{1,63}@.{3,190}"
 
     # Helper function. Used to get the daemon settings.
     def _get_settings()

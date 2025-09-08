@@ -1,7 +1,7 @@
 --
 -- data/sql/02-create-and-populate-table-contact_phones.sql
 -- ============================================================================
--- Customers API Lite microservice prototype (Crystal port). Version 0.1.10
+-- Customers API Lite microservice prototype (Crystal port). Version 0.1.12
 -- ============================================================================
 -- A daemon written in Crystal, designed and intended to be run
 -- as a microservice, implementing a special Customers API prototype
