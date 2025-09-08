@@ -182,8 +182,8 @@ module Controller
                     contact_ = cnx.query_one(sql_query_ + SQL_DESC_LIMIT_1,
                         contact_cust_id, as: String)
                 rescue e: DB::NoResultsError
-                    # Storing a special flag of requesting for a non-existent
-                    # customer in the context storage.
+                    # Storing a special flag in the server context storage,
+                    # indicating requesting for a non-existent customer.
                     ctx.set(REST_CUST_ID, true)
 
                     ctx.response.status_code = HTTP::Status::NOT_FOUND.code()
@@ -260,8 +260,8 @@ module Controller
                 as: {Int64, String}) rescue {0.to_i64(), EMPTY_STRING}
 
             if (customer[0] == 0)
-                # Storing a special flag of requesting for a non-existent
-                # customer in the context storage.
+                # Storing a special flag in the server context storage,
+                # indicating requesting for a non-existent customer.
                 ctx.set(REST_CUST_ID, true)
 
                 ctx.response.status_code = HTTP::Status::NOT_FOUND.code()
@@ -315,9 +315,9 @@ module Controller
             end
 
             if (conts.size() == 0)
-                # Storing a special flag in the context storage when there are
-                # no contacts belonging to a given customer exist, or there is
-                # no customer with such ID.
+                # Storing a special flag in the server context storage,
+                # indicating there are no contacts belonging to a given
+                # customer exist, or there is no customer with such ID.
                 ctx.set(REST_CONTACTS, true)
 
                 ctx.response.status_code = HTTP::Status::NOT_FOUND.code()
@@ -376,9 +376,10 @@ module Controller
             end
 
             if (conts.size() == 0)
-                # Storing a special flag in the context storage when there are
-                # no contacts of a given type belonging to a given customer
-                # exist, or there is no customer with such ID.
+                # Storing a special flag in the server context storage,
+                # indicating there are no contacts of a given type belonging
+                # to a given customer exist, or there is no customer
+                # with such ID.
                 ctx.set(REST_CONTACTS, true)
 
                 ctx.response.status_code = HTTP::Status::NOT_FOUND.code()
@@ -401,6 +402,8 @@ module Controller
     # Conventional HTTP error responses ---------------------------------------
 
     error 404 do |ctx|
+        # Retrieving special flags from the server context storage (if any),
+        # placed there by PUT and GET endpoints.
         is_cust_id  = ctx.get?(REST_CUST_ID)
         is_contacts = ctx.get?(REST_CONTACTS)
 
