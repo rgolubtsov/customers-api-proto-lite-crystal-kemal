@@ -38,6 +38,16 @@ Surely, one may consider this project to be suitable for a wide variety of appli
 
 The microservice might be built and run successfully under **Arch Linux** (proven). &mdash; First install the necessary dependencies (`base-devel`, `crystal`, `shards`, `sqlite`, `docker`):
 
+* In Ubuntu Server:
+
+```
+$ sudo apt-get update && \
+  sudo apt-get install build-essential crystal shards libsqlite3-dev docker.io -y
+...
+```
+
+* In Arch Linux:
+
 ```
 $ sudo pacman -Syu base-devel crystal shards sqlite docker
 ...
@@ -50,20 +60,20 @@ $ shards
 Resolving dependencies
 Fetching https://github.com/crystal-community/toml.cr.git
 Fetching https://github.com/chris-huxtable/syslog.cr.git
-Fetching https://github.com/kemalcr/kemal.git
 Fetching https://github.com/crystal-lang/crystal-sqlite3.git
+Fetching https://github.com/kemalcr/kemal.git
 Fetching https://github.com/crystal-lang/crystal-db.git
 Fetching https://github.com/luislavena/radix.git
 Fetching https://github.com/crystal-loot/exception_page.git
 Fetching https://github.com/sija/backtracer.cr.git
-Using toml (0.8.1)
-Using syslog (0.1.2)
-Using db (0.13.1)
-Using sqlite3 (0.21.0)
-Using radix (0.4.1)
-Using backtracer (1.2.4)
-Using exception_page (0.5.0)
-Using kemal (1.7.1)
+Installing toml (0.8.1)
+Installing syslog (0.1.2)
+Installing db (0.13.1)
+Installing sqlite3 (0.21.0)
+Installing radix (0.4.1)
+Installing backtracer (1.2.4)
+Installing exception_page (0.5.0)
+Installing kemal (1.7.1)
 ```
 
 ---
