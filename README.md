@@ -42,7 +42,14 @@ The microservice might be built and run successfully under **Arch Linux** (prove
 
 ```
 $ sudo apt-get update && \
-  sudo apt-get install build-essential crystal shards libsqlite3-dev docker.io -y
+  sudo apt-get install build-essential libsqlite3-dev docker.io -y
+...
+```
+
+> Since Crystal package is somehow outdated in the stock Ubuntu package repository, it is preferred to be installed from the official Crystal website by using their specifically tailored convenient installation script:
+
+```
+$ curl -sfSL https://crystal-lang.org/install.sh | sudo bash -s -- --version=1.16
 ...
 ```
 
@@ -60,8 +67,8 @@ $ shards
 Resolving dependencies
 Fetching https://github.com/crystal-community/toml.cr.git
 Fetching https://github.com/chris-huxtable/syslog.cr.git
-Fetching https://github.com/crystal-lang/crystal-sqlite3.git
 Fetching https://github.com/kemalcr/kemal.git
+Fetching https://github.com/crystal-lang/crystal-sqlite3.git
 Fetching https://github.com/crystal-lang/crystal-db.git
 Fetching https://github.com/luislavena/radix.git
 Fetching https://github.com/crystal-loot/exception_page.git
