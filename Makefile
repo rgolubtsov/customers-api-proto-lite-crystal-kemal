@@ -1,7 +1,7 @@
 #
 # Makefile
 # =============================================================================
-# Customers API Lite microservice prototype (Crystal port). Version 0.2.0
+# Customers API Lite microservice prototype (Crystal port). Version 0.2.3
 # =============================================================================
 # A daemon written in Crystal, designed and intended to be run
 # as a microservice, implementing a special Customers API prototype
@@ -26,7 +26,7 @@ DB_FILE = customers-api-lite.db.xz
 
 # Specify flags and other vars here.
 SHARDS = shards
-SFLAGS = build
+SFLAGS = --production build --release
 
 RMFLAGS = -vR
 UNXZ    = unxz

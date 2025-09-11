@@ -1,7 +1,7 @@
 #
 # src/api-lite-controller.cr
 # =============================================================================
-# Customers API Lite microservice prototype (Crystal port). Version 0.2.0
+# Customers API Lite microservice prototype (Crystal port). Version 0.2.3
 # =============================================================================
 # A daemon written in Crystal, designed and intended to be run
 # as a microservice, implementing a special Customers API prototype
@@ -18,6 +18,8 @@ module Controller
     dbg = Helper.dbg()
     log = Helper.log()
     cnx = Helper.cnx()
+
+    # Request filters ---------------------------------------------------------
 
     before_all do |ctx|
         method = ctx.request.method()
@@ -42,6 +44,8 @@ module Controller
         ctx.response.status_code  = status.code()
         ctx.response.content_type = MIME_TYPE
     end
+
+    # REST API endpoints ------------------------------------------------------
 
     # The `PUT /v1/customers` endpoint.
     #
@@ -414,14 +418,6 @@ module Controller
         else
             {:error => ERR_REQ_NOT_FOUND_1}.to_json()
         end
-    end
-
-    # Off-topic ---------------------------------------------------------------
-
-    get SLASH do
-        ret = EMPTY_STRING; (1 .. 79).each() do ret += MINUS end#; ret += EOL
-
-        ret.to_json()
     end
 end
 

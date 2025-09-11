@@ -1,7 +1,7 @@
 #
 # src/api-lite-core.cr
 # =============================================================================
-# Customers API Lite microservice prototype (Crystal port). Version 0.2.0
+# Customers API Lite microservice prototype (Crystal port). Version 0.2.3
 # =============================================================================
 # A daemon written in Crystal, designed and intended to be run
 # as a microservice, implementing a special Customers API prototype
@@ -81,6 +81,7 @@ require "./api-lite-controller"
 
 # Trying to start up the Kemal web server.
 begin
+    Kemal.config.env = RUN_MODE
     Kemal.run(server_port)
 rescue e: Socket::BindError
     log.error{ERR_CANNOT_START_SERVER + ERR_ADDR_ALREADY_IN_USE}

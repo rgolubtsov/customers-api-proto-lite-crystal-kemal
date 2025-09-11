@@ -1,7 +1,7 @@
 #
 # src/api-lite-helper.cr
 # =============================================================================
-# Customers API Lite microservice prototype (Crystal port). Version 0.2.0
+# Customers API Lite microservice prototype (Crystal port). Version 0.2.3
 # =============================================================================
 # A daemon written in Crystal, designed and intended to be run
 # as a microservice, implementing a special Customers API prototype
@@ -25,7 +25,6 @@ module Helper
     SLASH        = "/"
     ANY          = "*"
     COLON        = ":"
-    MINUS        = "-"
     V_BAR        = "|"
     EQUALS       = "="
     O_BRACKET    = "["
@@ -68,6 +67,9 @@ module Helper
 
     # The default server port number.
     DEF_PORT = 8080
+
+    # The mode the server is operated in.
+    RUN_MODE = "production"
 
     # Daemon settings keys for the microservice daemon name.
     DAEMON_NAME_G = "daemon"
