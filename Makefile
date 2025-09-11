@@ -26,7 +26,7 @@ DB_FILE = customers-api-lite.db.xz
 
 # Specify flags and other vars here.
 SHARDS = shards
-SFLAGS = build
+SFLAGS = --production build --release
 
 RMFLAGS = -vR
 UNXZ    = unxz

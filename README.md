@@ -89,7 +89,7 @@ Installing kemal (1.7.1)
 **Build** the microservice using the **Shards utility**:
 
 ```
-$ shards build && \
+$ shards --production build --release && \
   if [ -f data/db/customers-api-lite.db.xz ]; then \
       unxz data/db/customers-api-lite.db.xz; \
   fi
