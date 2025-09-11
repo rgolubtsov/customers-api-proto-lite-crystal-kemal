@@ -25,7 +25,6 @@ module Helper
     SLASH        = "/"
     ANY          = "*"
     COLON        = ":"
-    MINUS        = "-"
     V_BAR        = "|"
     EQUALS       = "="
     O_BRACKET    = "["
