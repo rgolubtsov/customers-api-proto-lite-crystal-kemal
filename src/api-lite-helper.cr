@@ -68,6 +68,9 @@ module Helper
     # The default server port number.
     DEF_PORT = 8080
 
+    # The mode the server is operated in.
+    RUN_MODE = "production"
+
     # Daemon settings keys for the microservice daemon name.
     DAEMON_NAME_G = "daemon"
     DAEMON_NAME_S = "name"

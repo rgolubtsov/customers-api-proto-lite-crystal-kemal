@@ -81,6 +81,7 @@ require "./api-lite-controller"
 
 # Trying to start up the Kemal web server.
 begin
+    Kemal.config.env = RUN_MODE
     Kemal.run(server_port)
 rescue e: Socket::BindError
     log.error{ERR_CANNOT_START_SERVER + ERR_ADDR_ALREADY_IN_USE}
