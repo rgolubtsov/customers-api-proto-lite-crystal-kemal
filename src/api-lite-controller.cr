@@ -1,7 +1,7 @@
 #
 # src/api-lite-controller.cr
 # =============================================================================
-# Customers API Lite microservice prototype (Crystal port). Version 0.2.0
+# Customers API Lite microservice prototype (Crystal port). Version 0.2.3
 # =============================================================================
 # A daemon written in Crystal, designed and intended to be run
 # as a microservice, implementing a special Customers API prototype
