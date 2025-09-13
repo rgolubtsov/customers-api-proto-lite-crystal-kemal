@@ -26,6 +26,7 @@ WORKDIR    api-lite
 USER       root
 RUN        ["chown", "-R", "daemon:daemon", "."]
 USER       daemon
+RUN        shards
 RUN        ["make", "clean"]
 RUN        ["make", "all"  ]
 
