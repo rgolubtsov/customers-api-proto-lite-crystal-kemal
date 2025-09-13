@@ -31,6 +31,7 @@ Surely, one may consider this project to be suitable for a wide variety of appli
 * **[Building](#building)**
   * **[Creating a Docker image](#creating-a-docker-image)**
 * **[Running](#running)**
+  * **[Running a Docker image](#running-a-docker-image)**
 * **[Consuming](#consuming)**
   * **[Logging](#logging)**
   * **[Error handling](#error-handling)**
@@ -111,7 +112,7 @@ $ make all  # <== Building the daemon.
 **Build** a Docker image for the microservice:
 
 ```
-$ # Pull the Crystal image first, if not already there:
+$ # Pull the Crystal (based on Alpine Linux) image first, if not already there:
 $ sudo docker pull crystallang/crystal:latest-alpine
 ...
 $ # Then build the microservice image:
@@ -136,6 +137,16 @@ $ ./bin/api-lited > /dev/null 2>&1 &
 ```
 
 **Note:** This will suppress all the console output only; logging to a logfile and to the Unix syslog will remain unchanged.
+
+### Running a Docker image
+
+**Run** a Docker image of the microservice, deleting all stopped containers prior to that (if any):
+
+```
+$ sudo docker rm `sudo docker ps -aq`; \
+  export PORT=8765 && sudo docker run -dp${PORT}:${PORT} --name api-lite-cry customersapi/api-lite-cry; echo $?
+...
+```
 
 ## Consuming
 
