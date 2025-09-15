@@ -68,10 +68,10 @@ Then pull and install all the necessary third-party libraries (so-called **shard
 ```
 $ shards
 Resolving dependencies
-Fetching https://github.com/crystal-community/toml.cr.git
 Fetching https://github.com/chris-huxtable/syslog.cr.git
-Fetching https://github.com/kemalcr/kemal.git
 Fetching https://github.com/crystal-lang/crystal-sqlite3.git
+Fetching https://github.com/kemalcr/kemal.git
+Fetching https://github.com/crystal-community/toml.cr.git
 Fetching https://github.com/crystal-lang/crystal-db.git
 Fetching https://github.com/luislavena/radix.git
 Fetching https://github.com/crystal-loot/exception_page.git
@@ -430,34 +430,34 @@ The microservice has the ability to log messages to a logfile and to the Unix sy
 
 ```
 $ tail -f log/customers-api-lite.log
-[2025-09-08][20:30:10] [DEBUG] [Customers API Lite]
-[2025-09-08][20:30:10] [DEBUG] [#<DB::Database:0x71814c610ed0>]
-[2025-09-08][20:30:10] [INFO ] Server started on port 8765
-[2025-09-08][20:30:10] [INFO ] [development] Kemal is ready to lead at http://0.0.0.0:8765
-[2025-09-08][20:30:20] [DEBUG] [PUT]
-[2025-09-08][20:30:20] [DEBUG] [Jamison Palmer]
-[2025-09-08][20:30:20] [DEBUG] Executing query
-[2025-09-08][20:30:20] [DEBUG] Executing query
-[2025-09-08][20:30:20] [DEBUG] [3|Jamison Palmer]
-[2025-09-08][20:30:20] [INFO ] 201 PUT /v1/customers 129.65ms
-[2025-09-08][20:40:50] [DEBUG] [PUT]
-[2025-09-08][20:40:50] [DEBUG] customer_id=3
-[2025-09-08][20:40:50] [DEBUG] [jamison.palmer@example.com]
-[2025-09-08][20:40:50] [DEBUG] Executing query
-[2025-09-08][20:40:50] [DEBUG] Executing query
-[2025-09-08][20:40:50] [DEBUG] [email|jamison.palmer@example.com]
-[2025-09-08][20:40:50] [INFO ] 201 PUT /v1/customers/contacts 106.84ms
-[2025-09-08][20:45:50] [DEBUG] [GET]
-[2025-09-08][20:45:50] [DEBUG] customer_id=3
-[2025-09-08][20:45:50] [DEBUG] Executing query
-[2025-09-08][20:45:50] [DEBUG] [3|Jamison Palmer]
-[2025-09-08][20:45:50] [INFO ] 200 GET /v1/customers/3 651.31µs
-[2025-09-08][20:55:25] [DEBUG] [GET]
-[2025-09-08][20:55:25] [DEBUG] customer_id=3 | contact_type=email
-[2025-09-08][20:55:25] [DEBUG] Executing query
-[2025-09-08][20:55:25] [DEBUG] [jamison.palmer@example.com]
-[2025-09-08][20:55:25] [INFO ] 200 GET /v1/customers/3/contacts/email 718.68µs
-[2025-09-08][21:20:20] [INFO ] Kemal is going to take a rest!
+[2025-09-15][22:15:10] [DEBUG] [Customers API Lite]
+[2025-09-15][22:15:10] [DEBUG] [#<DB::Database:0x75812eb2fed0>]
+[2025-09-15][22:15:10] [INFO ] Server started on port 8765
+[2025-09-15][22:15:10] [INFO ] [production] Kemal is ready to lead at http://0.0.0.0:8765
+[2025-09-15][22:20:10] [DEBUG] [PUT]
+[2025-09-15][22:20:10] [DEBUG] [Saturday Sunday]
+[2025-09-15][22:20:10] [DEBUG] Executing query
+[2025-09-15][22:20:10] [DEBUG] Executing query
+[2025-09-15][22:20:10] [DEBUG] [5|Saturday Sunday]
+[2025-09-15][22:20:10] [INFO ] 201 PUT /v1/customers 204.62ms
+[2025-09-15][22:25:10] [DEBUG] [PUT]
+[2025-09-15][22:25:10] [DEBUG] customer_id=5
+[2025-09-15][22:25:10] [DEBUG] [Saturday.Sunday@example.com]
+[2025-09-15][22:25:10] [DEBUG] Executing query
+[2025-09-15][22:25:10] [DEBUG] Executing query
+[2025-09-15][22:25:10] [DEBUG] [email|Saturday.Sunday@example.com]
+[2025-09-15][22:25:10] [INFO ] 201 PUT /v1/customers/contacts 148.83ms
+[2025-09-15][22:30:20] [DEBUG] [GET]
+[2025-09-15][22:30:20] [DEBUG] customer_id=5
+[2025-09-15][22:30:20] [DEBUG] Executing query
+[2025-09-15][22:30:20] [DEBUG] [5|Saturday Sunday]
+[2025-09-15][22:30:20] [INFO ] 200 GET /v1/customers/5 465.34µs
+[2025-09-15][22:35:30] [DEBUG] [GET]
+[2025-09-15][22:35:30] [DEBUG] customer_id=5 | contact_type=email
+[2025-09-15][22:35:30] [DEBUG] Executing query
+[2025-09-15][22:35:30] [DEBUG] [Saturday.Sunday@example.com]
+[2025-09-15][22:35:30] [INFO ] 200 GET /v1/customers/5/contacts/email 951.57µs
+[2025-09-15][22:40:40] [INFO ] Kemal is going to take a rest!
 ```
 
 Messages registered by the Unix system logger can be seen and analyzed using the `journalctl` utility:
@@ -465,23 +465,23 @@ Messages registered by the Unix system logger can be seen and analyzed using the
 ```
 $ journalctl -f
 ...
-Sep 08 20:30:10 <hostname> api-lited[<pid>]: [Customers API Lite]
-Sep 08 20:30:10 <hostname> api-lited[<pid>]: [#<DB::Database:0x71814c610ed0>]
-Sep 08 20:30:10 <hostname> api-lited[<pid>]: Server started on port 8765
-Sep 08 20:30:20 <hostname> api-lited[<pid>]: [PUT]
-Sep 08 20:30:20 <hostname> api-lited[<pid>]: [Jamison Palmer]
-Sep 08 20:30:20 <hostname> api-lited[<pid>]: [3|Jamison Palmer]
-Sep 08 20:40:50 <hostname> api-lited[<pid>]: [PUT]
-Sep 08 20:40:50 <hostname> api-lited[<pid>]: customer_id=3
-Sep 08 20:40:50 <hostname> api-lited[<pid>]: [jamison.palmer@example.com]
-Sep 08 20:40:50 <hostname> api-lited[<pid>]: [email|jamison.palmer@example.com]
-Sep 08 20:45:50 <hostname> api-lited[<pid>]: [GET]
-Sep 08 20:45:50 <hostname> api-lited[<pid>]: customer_id=3
-Sep 08 20:45:50 <hostname> api-lited[<pid>]: [3|Jamison Palmer]
-Sep 08 20:55:25 <hostname> api-lited[<pid>]: [GET]
-Sep 08 20:55:25 <hostname> api-lited[<pid>]: customer_id=3 | contact_type=email
-Sep 08 20:55:25 <hostname> api-lited[<pid>]: [jamison.palmer@example.com]
-Sep 08 21:20:20 <hostname> api-lited[<pid>]: Server stopped
+Sep 15 22:15:10 <hostname> api-lited[<pid>]: [Customers API Lite]
+Sep 15 22:15:10 <hostname> api-lited[<pid>]: [#<DB::Database:0x75812eb2fed0>]
+Sep 15 22:15:10 <hostname> api-lited[<pid>]: Server started on port 8765
+Sep 15 22:20:10 <hostname> api-lited[<pid>]: [PUT]
+Sep 15 22:20:10 <hostname> api-lited[<pid>]: [Saturday Sunday]
+Sep 15 22:20:10 <hostname> api-lited[<pid>]: [5|Saturday Sunday]
+Sep 15 22:25:10 <hostname> api-lited[<pid>]: [PUT]
+Sep 15 22:25:10 <hostname> api-lited[<pid>]: customer_id=5
+Sep 15 22:25:10 <hostname> api-lited[<pid>]: [Saturday.Sunday@example.com]
+Sep 15 22:25:10 <hostname> api-lited[<pid>]: [email|Saturday.Sunday@example.com]
+Sep 15 22:30:20 <hostname> api-lited[<pid>]: [GET]
+Sep 15 22:30:20 <hostname> api-lited[<pid>]: customer_id=5
+Sep 15 22:30:20 <hostname> api-lited[<pid>]: [5|Saturday Sunday]
+Sep 15 22:35:30 <hostname> api-lited[<pid>]: [GET]
+Sep 15 22:35:30 <hostname> api-lited[<pid>]: customer_id=5 | contact_type=email
+Sep 15 22:35:30 <hostname> api-lited[<pid>]: [Saturday.Sunday@example.com]
+Sep 15 22:40:40 <hostname> api-lited[<pid>]: Server stopped
 ```
 
 **TBD** :cd:
