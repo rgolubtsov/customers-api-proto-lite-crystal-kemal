@@ -248,6 +248,14 @@ PID   USER     TIME  COMMAND
 0
 ```
 
+To stop a running container of the microservice at any time, simply issue the following command:
+
+```
+$ sudo docker stop api-lite-cry; echo $?
+api-lite-cry
+0
+```
+
 ## Consuming
 
 The microservice exposes **six REST API endpoints** to web clients. They are all intended to deal with customer entities and/or contact entities that belong to customer profiles. The following table displays their syntax:
