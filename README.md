@@ -161,7 +161,7 @@ $
 $ sudo docker exec -it api-lite-cry sh; echo $?
 /var/tmp/api-lite $
 /var/tmp/api-lite $ uname -a
-Linux 731d67d97e64 6.8.0-79-generic #79-Ubuntu SMP PREEMPT_DYNAMIC Tue Aug 12 14:42:46 UTC 2025 x86_64 Linux
+Linux <container_id> 6.8.0-79-generic #79-Ubuntu SMP PREEMPT_DYNAMIC Tue Aug 12 14:42:46 UTC 2025 x86_64 Linux
 /var/tmp/api-lite $
 /var/tmp/api-lite $ crystal --version
 Crystal 1.17.1 [19be240d1] (2025-07-22)
@@ -174,64 +174,64 @@ Shards 0.19.1 [182792a] (2025-01-23)
 /var/tmp/api-lite $
 /var/tmp/api-lite $ ls -al
 total 64
-drwxr-xr-x    1 daemon   daemon        4096 Sep 14 20:10 .
-drwxrwxrwt    1 root     root          4096 Sep 14 19:51 ..
-drwxr-xr-x    1 daemon   daemon        4096 Sep 14 19:53 .crystal
-drwxr-xr-x    3 daemon   daemon        4096 Sep 14 19:52 .shards
+drwxr-xr-x    1 daemon   daemon        4096 Sep 16 11:00 .
+drwxrwxrwt    1 root     root          4096 Sep 16 10:50 ..
+drwxr-xr-x    1 daemon   daemon        4096 Sep 16 10:51 .crystal
+drwxr-xr-x    3 daemon   daemon        4096 Sep 16 10:50 .shards
 -rw-rw-r--    1 daemon   daemon        1254 Sep 13 21:40 Makefile
-drwxr-xr-x    2 daemon   daemon        4096 Sep 14 19:55 bin
-drwxr-xr-x    1 daemon   daemon        4096 Sep 14 19:51 data
-drwxr-xr-x    1 daemon   daemon        4096 Sep 14 19:51 etc
-drwxr-xr-x   10 daemon   daemon        4096 Sep 14 19:52 lib
-drwxr-xr-x    2 daemon   daemon        4096 Sep 14 20:10 log
--rw-r--r--    1 daemon   daemon         706 Sep 14 19:52 shard.lock
+drwxr-xr-x    2 daemon   daemon        4096 Sep 16 10:53 bin
+drwxr-xr-x    1 daemon   daemon        4096 Sep 16 10:50 data
+drwxr-xr-x    1 daemon   daemon        4096 Sep 16 10:50 etc
+drwxr-xr-x   10 daemon   daemon        4096 Sep 16 10:50 lib
+drwxr-xr-x    2 daemon   daemon        4096 Sep 16 11:00 log
+-rw-r--r--    1 daemon   daemon         706 Sep 16 10:50 shard.lock
 -rw-rw-r--    1 daemon   daemon        1436 Sep 13 21:40 shard.yml
-drwxr-xr-x    1 daemon   daemon        4096 Sep 14 19:51 src
+drwxr-xr-x    1 daemon   daemon        4096 Sep 16 10:50 src
 /var/tmp/api-lite $
 /var/tmp/api-lite $ ls -al bin/ data/db/ etc/ log/ src/
 bin/:
 total 4480
-drwxr-xr-x    2 daemon   daemon        4096 Sep 14 19:55 .
-drwxr-xr-x    1 daemon   daemon        4096 Sep 14 20:10 ..
--rwxr-xr-x    1 daemon   daemon     4574056 Sep 14 19:55 api-lited
+drwxr-xr-x    2 daemon   daemon        4096 Sep 16 10:53 .
+drwxr-xr-x    1 daemon   daemon        4096 Sep 16 11:00 ..
+-rwxr-xr-x    1 daemon   daemon     4574056 Sep 16 10:53 api-lited
 
 data/db/:
 total 40
-drwxr-xr-x    1 daemon   daemon        4096 Sep 14 19:55 .
-drwxr-xr-x    1 daemon   daemon        4096 Sep 14 19:51 ..
--rw-rw-r--    1 daemon   daemon       24576 Sep 13 20:50 customers-api-lite.db
+drwxr-xr-x    1 daemon   daemon        4096 Sep 16 10:53 .
+drwxr-xr-x    1 daemon   daemon        4096 Sep 16 10:50 ..
+-rw-rw-r--    1 daemon   daemon       24576 Sep 16 10:50 customers-api-lite.db
 
 etc/:
 total 16
-drwxr-xr-x    1 daemon   daemon        4096 Sep 14 19:51 .
-drwxr-xr-x    1 daemon   daemon        4096 Sep 14 20:10 ..
--rw-rw-r--    1 daemon   daemon         797 Sep 14 19:30 settings.conf
+drwxr-xr-x    1 daemon   daemon        4096 Sep 16 10:50 .
+drwxr-xr-x    1 daemon   daemon        4096 Sep 16 11:00 ..
+-rw-rw-r--    1 daemon   daemon         797 Sep 15 20:00 settings.conf
 
 log/:
 total 16
-drwxr-xr-x    2 daemon   daemon        4096 Sep 14 20:10 .
-drwxr-xr-x    1 daemon   daemon        4096 Sep 14 20:10 ..
--rw-r--r--    1 daemon   daemon         265 Sep 14 20:10 customers-api-lite.log
+drwxr-xr-x    2 daemon   daemon        4096 Sep 16 11:00 .
+drwxr-xr-x    1 daemon   daemon        4096 Sep 16 11:00 ..
+-rw-r--r--    1 daemon   daemon         265 Sep 16 11:00 customers-api-lite.log
 
 src/:
 total 52
-drwxr-xr-x    1 daemon   daemon        4096 Sep 14 19:51 .
-drwxr-xr-x    1 daemon   daemon        4096 Sep 14 20:10 ..
+drwxr-xr-x    1 daemon   daemon        4096 Sep 16 10:50 .
+drwxr-xr-x    1 daemon   daemon        4096 Sep 16 11:00 ..
 -rw-rw-r--    1 daemon   daemon       16448 Sep 13 21:40 api-lite-controller.cr
 -rw-rw-r--    1 daemon   daemon        3411 Sep 13 21:40 api-lite-core.cr
 -rw-rw-r--    1 daemon   daemon        6130 Sep 13 21:40 api-lite-helper.cr
 -rw-rw-r--    1 daemon   daemon        4933 Sep 13 21:40 api-lite-model.cr
 /var/tmp/api-lite $
 /var/tmp/api-lite $ ldd bin/api-lited
-        /lib/ld-musl-x86_64.so.1 (0x7c9951bca000)
-        libz.so.1 => /lib/libz.so.1 (0x7c99519cf000)
-        libssl.so.3 => /lib/libssl.so.3 (0x7c995190b000)
-        libcrypto.so.3 => /lib/libcrypto.so.3 (0x7c99514c3000)
-        libsqlite3.so.0 => /usr/lib/libsqlite3.so.0 (0x7c9951360000)
-        libpcre2-8.so.0 => /usr/lib/libpcre2-8.so.0 (0x7c99512b5000)
-        libgc.so.1 => /usr/lib/libgc.so.1 (0x7c995124d000)
-        libgcc_s.so.1 => /usr/lib/libgcc_s.so.1 (0x7c9951229000)
-        libc.musl-x86_64.so.1 => /lib/ld-musl-x86_64.so.1 (0x7c9951bca000)
+        /lib/ld-musl-x86_64.so.1 (0x7e06e7e8a000)
+        libz.so.1 => /lib/libz.so.1 (0x7e06e7c8f000)
+        libssl.so.3 => /lib/libssl.so.3 (0x7e06e7bcb000)
+        libcrypto.so.3 => /lib/libcrypto.so.3 (0x7e06e7783000)
+        libsqlite3.so.0 => /usr/lib/libsqlite3.so.0 (0x7e06e7620000)
+        libpcre2-8.so.0 => /usr/lib/libpcre2-8.so.0 (0x7e06e7575000)
+        libgc.so.1 => /usr/lib/libgc.so.1 (0x7e06e750d000)
+        libgcc_s.so.1 => /usr/lib/libgcc_s.so.1 (0x7e06e74e9000)
+        libc.musl-x86_64.so.1 => /lib/ld-musl-x86_64.so.1 (0x7e06e7e8a000)
 /var/tmp/api-lite $
 /var/tmp/api-lite $ netstat -plunt
 Active Internet connections (only servers)
@@ -241,8 +241,8 @@ tcp        0      0 0.0.0.0:8765            0.0.0.0:*               LISTEN      
 /var/tmp/api-lite $ ps aux
 PID   USER     TIME  COMMAND
     1 daemon    0:00 bin/api-lited
-   13 daemon    0:00 sh
-   27 daemon    0:00 ps aux
+    7 daemon    0:00 sh
+   21 daemon    0:00 ps aux
 /var/tmp/api-lite $
 /var/tmp/api-lite $ exit # Or simply <Ctrl-D>.
 0
