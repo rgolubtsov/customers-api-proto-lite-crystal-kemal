@@ -484,7 +484,72 @@ Sep 15 22:35:30 <hostname> api-lited[<pid>]: [Saturday.Sunday@example.com]
 Sep 15 22:40:40 <hostname> api-lited[<pid>]: Server stopped
 ```
 
-**TBD** :cd:
+Inside the running container logs might be queried also by `tail`ing the `log/customers-api-lite.log` logfile:
+
+```
+/var/tmp/api-lite $ tail -f log/customers-api-lite.log
+[2025-09-16][11:00:30] [DEBUG] [Customers API Lite]
+[2025-09-16][11:00:30] [DEBUG] [#<DB::Database:0x77853f2b8ed0>]
+[2025-09-16][11:00:30] [INFO ] Server started on port 8765
+[2025-09-16][11:00:30] [INFO ] [production] Kemal is ready to lead at http://0.0.0.0:8765
+[2025-09-16][20:05:30] [DEBUG] [PUT]
+[2025-09-16][20:05:30] [DEBUG] [Saturday Sunday]
+[2025-09-16][20:05:30] [DEBUG] Executing query
+[2025-09-16][20:05:30] [DEBUG] Executing query
+[2025-09-16][20:05:30] [DEBUG] [5|Saturday Sunday]
+[2025-09-16][20:05:30] [INFO ] 201 PUT /v1/customers 71.62ms
+[2025-09-16][20:10:30] [DEBUG] [PUT]
+[2025-09-16][20:10:30] [DEBUG] customer_id=5
+[2025-09-16][20:10:30] [DEBUG] [Saturday.Sunday@example.com]
+[2025-09-16][20:10:30] [DEBUG] Executing query
+[2025-09-16][20:10:30] [DEBUG] Executing query
+[2025-09-16][20:10:30] [DEBUG] [email|Saturday.Sunday@example.com]
+[2025-09-16][20:10:30] [INFO ] 201 PUT /v1/customers/contacts 81.54ms
+[2025-09-16][20:15:40] [DEBUG] [GET]
+[2025-09-16][20:15:40] [DEBUG] customer_id=5
+[2025-09-16][20:15:40] [DEBUG] Executing query
+[2025-09-16][20:15:40] [DEBUG] [5|Saturday Sunday]
+[2025-09-16][20:15:40] [INFO ] 200 GET /v1/customers/5 608.12µs
+[2025-09-16][20:20:50] [DEBUG] [GET]
+[2025-09-16][20:20:50] [DEBUG] customer_id=5 | contact_type=email
+[2025-09-16][20:20:50] [DEBUG] Executing query
+[2025-09-16][20:20:50] [DEBUG] [Saturday.Sunday@example.com]
+[2025-09-16][20:20:50] [INFO ] 200 GET /v1/customers/5/contacts/email 425.1µs
+```
+
+And of course, Docker itself gives the possibility to read log messages by using the corresponding command for that:
+
+```
+$ sudo docker logs -f api-lite-cry
+[2025-09-16][11:00:30] [DEBUG] [Customers API Lite]
+[2025-09-16][11:00:30] [DEBUG] [#<DB::Database:0x77853f2b8ed0>]
+[2025-09-16][11:00:30] [INFO ] Server started on port 8765
+[2025-09-16][11:00:30] [INFO ] [production] Kemal is ready to lead at http://0.0.0.0:8765
+[2025-09-16][20:05:30] [DEBUG] [PUT]
+[2025-09-16][20:05:30] [DEBUG] [Saturday Sunday]
+[2025-09-16][20:05:30] [DEBUG] Executing query
+[2025-09-16][20:05:30] [DEBUG] Executing query
+[2025-09-16][20:05:30] [DEBUG] [5|Saturday Sunday]
+[2025-09-16][20:05:30] [INFO ] 201 PUT /v1/customers 71.62ms
+[2025-09-16][20:10:30] [DEBUG] [PUT]
+[2025-09-16][20:10:30] [DEBUG] customer_id=5
+[2025-09-16][20:10:30] [DEBUG] [Saturday.Sunday@example.com]
+[2025-09-16][20:10:30] [DEBUG] Executing query
+[2025-09-16][20:10:30] [DEBUG] Executing query
+[2025-09-16][20:10:30] [DEBUG] [email|Saturday.Sunday@example.com]
+[2025-09-16][20:10:30] [INFO ] 201 PUT /v1/customers/contacts 81.54ms
+[2025-09-16][20:15:40] [DEBUG] [GET]
+[2025-09-16][20:15:40] [DEBUG] customer_id=5
+[2025-09-16][20:15:40] [DEBUG] Executing query
+[2025-09-16][20:15:40] [DEBUG] [5|Saturday Sunday]
+[2025-09-16][20:15:40] [INFO ] 200 GET /v1/customers/5 608.12µs
+[2025-09-16][20:20:50] [DEBUG] [GET]
+[2025-09-16][20:20:50] [DEBUG] customer_id=5 | contact_type=email
+[2025-09-16][20:20:50] [DEBUG] Executing query
+[2025-09-16][20:20:50] [DEBUG] [Saturday.Sunday@example.com]
+[2025-09-16][20:20:50] [INFO ] 200 GET /v1/customers/5/contacts/email 425.1µs
+[2025-09-16][20:25:00] [INFO ] Kemal is going to take a rest!
+```
 
 ### Error handling
 
@@ -505,7 +570,3 @@ $ curl -XPUT http://localhost:8765/v1/customers/contacts \
        -d '{"customer_id":"3","contact":"12197654320--089asdf../nj524987"}'
 {"error":"HTTP 400 Bad Request: Request is malformed. Please check your inputs."}
 ```
-
----
-
-**WIP** :dvd:
