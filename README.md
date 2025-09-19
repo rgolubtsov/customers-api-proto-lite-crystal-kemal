@@ -3,7 +3,7 @@
 **A daemon written in Crystal, designed and intended to be run as a microservice,
 <br />implementing a special Customers API prototype with a smart yet simplified data scheme**
 
-**Rationale:** This project is a *direct* **[Crystal](https://crystal-lang.org "The Crystal Programming Language")** port of the earlier developed **Customers API Lite microservice prototype**, written in V using **[veb](https://modules.vlang.io/veb.html "The V Web Server")** web server library/framework, and tailored to be run as a microservice in a Docker container. The following description of the underlying architecture and logics has been taken **[from here](https://github.com/rgolubtsov/customers-api-proto-lite-vlang-veb)** almost as is, without any principal modifications or adjustment.
+**Rationale:** This project is a *direct* **[Crystal](https://crystal-lang.org "The Crystal Programming Language")** port of the earlier developed **Customers API Lite microservice prototype**, written in V using **[veb](https://modules.vlang.io/veb.html "The V Web Server")** web server library/framework, and tailored to be run as a microservice in a Docker container. The following description of the underlying architecture and logics has been taken **[from here](https://github.com/rgolubtsov/customers-api-proto-lite-vlang-veb/blob/main/README.md)** almost as is, without any principal modifications or adjustment.
 
 This repo is dedicated to develop a microservice that implements a prototype of REST API service for ordinary Customers operations like adding/retrieving a Customer to/from the database, also doing the same ops with Contacts (phone or email) which belong to a Customer account.
 
