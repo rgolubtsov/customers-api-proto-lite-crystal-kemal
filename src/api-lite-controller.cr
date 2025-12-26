@@ -240,7 +240,7 @@ module Controller
     #
     # Retrieves profile details for a given customer from the database.
     #
-    # Returns a specific HTTP status code with profile details for a given
+    # Returns the `200 OK` HTTP status code with profile details for a given
     # customer (in the response body in JSON representation).
     # May return client or server error depending on incoming request.
     get (SLASH + REST_VERSION + SLASH + REST_PREFIX +
