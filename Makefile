@@ -35,7 +35,7 @@ UNXZ    = unxz
 $(EXEC): $(DEPS)
 	$(SHARDS) $(SFLAGS) && \
 	if [ -f $(DB_PATH)/$(DB_FILE) ]; then \
-	    $(UNXZ) $(DB_PATH)/$(DB_FILE); \
+	   $(UNXZ) $(DB_PATH)/$(DB_FILE); \
 	fi
 
 .PHONY: all clean
