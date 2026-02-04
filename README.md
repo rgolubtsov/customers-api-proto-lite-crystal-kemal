@@ -113,7 +113,7 @@ $ make all  # <== Building the daemon.
 **Build** a Docker image for the microservice:
 
 ```
-$ # Pull the Crystal (based on Alpine Linux) image first, if not already there:
+$ # Pull the Crystal image first (based on Alpine Linux), if not already there:
 $ sudo docker pull crystallang/crystal:latest-alpine
 ...
 $ # Then build the microservice image:
