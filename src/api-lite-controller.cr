@@ -152,15 +152,10 @@ module Controller
 
                 {:error => ERR_REQ_MALFORMED}.to_json()
             else
-                sql_query = SQL_PUT_CONTACT[1]
-
-                   if ((contact_type == PHONE) ||
-                       (contact_type == PHONE.upcase()))
-
+                    sql_query = SQL_PUT_CONTACT[1]
+                   if (contact_type == PHONE)
                     sql_query = SQL_PUT_CONTACT[0]
-                elsif ((contact_type == EMAIL) ||
-                       (contact_type == EMAIL.upcase()))
-
+                elsif (contact_type == EMAIL)
                     sql_query = SQL_PUT_CONTACT[1]
                 end
 
@@ -168,22 +163,18 @@ module Controller
                 # a given customer to the database).
                 cnx.exec(sql_query, contact_contact, contact_cust_id)
 
-                sql_query_ = SQL_GET_CONTACTS_BY_TYPE[2]
+                    sql_query = SQL_GET_CONTACTS_BY_TYPE[1]
 
-                   if ((contact_type == PHONE) ||
-                       (contact_type == PHONE.upcase()))
-
-                    sql_query_ = SQL_GET_CONTACTS_BY_TYPE[0] +
-                                 SQL_ORDER_CONTACTS_BY_ID[0]
-                elsif ((contact_type == EMAIL) ||
-                       (contact_type == EMAIL.upcase()))
-
-                    sql_query_ = SQL_GET_CONTACTS_BY_TYPE[1] +
-                                 SQL_ORDER_CONTACTS_BY_ID[1]
+                   if (contact_type == PHONE)
+                    sql_query = SQL_GET_CONTACTS_BY_TYPE[0] +
+                                SQL_ORDER_CONTACTS_BY_ID[0]
+                elsif (contact_type == EMAIL)
+                    sql_query = SQL_GET_CONTACTS_BY_TYPE[1] +
+                                SQL_ORDER_CONTACTS_BY_ID[1]
                 end
 
                 begin
-                    contact_ = cnx.query_one(sql_query_ + SQL_DESC_LIMIT_1,
+                    contact_ = cnx.query_one(sql_query + SQL_DESC_LIMIT_1,
                         contact_cust_id, as: String)
                 rescue e: DB::NoResultsError
                     # Storing a special flag in the server context storage,
@@ -348,7 +339,7 @@ module Controller
          SLASH + COLON + REST_CONT_TYPE) do |ctx|
 
         customer_id  = ctx.params.url[REST_CUST_ID]
-        contact_type = ctx.params.url[REST_CONT_TYPE]
+        contact_type = ctx.params.url[REST_CONT_TYPE].downcase()
 
         _dbg(dbg, log, REST_CUST_ID   + EQUALS + customer_id + SPACE + V_BAR +
                SPACE + REST_CONT_TYPE + EQUALS + contact_type)
@@ -361,11 +352,10 @@ module Controller
 
             {:error => ERR_REQ_MALFORMED}.to_json()
         else
-            sql_query = SQL_GET_CONTACTS_BY_TYPE[2]
-
-               if ((contact_type == PHONE) || (contact_type == PHONE.upcase()))
+                sql_query = SQL_GET_CONTACTS_BY_TYPE[1]
+               if (contact_type == PHONE)
                 sql_query = SQL_GET_CONTACTS_BY_TYPE[0]
-            elsif ((contact_type == EMAIL) || (contact_type == EMAIL.upcase()))
+            elsif (contact_type == EMAIL)
                 sql_query = SQL_GET_CONTACTS_BY_TYPE[1]
             end
 
