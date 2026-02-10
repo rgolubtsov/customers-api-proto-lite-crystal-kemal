@@ -454,34 +454,34 @@ The microservice has the ability to log messages to a logfile and to the Unix sy
 
 ```
 $ tail -f log/customers-api-lite.log
-[2025-09-15][22:15:10] [DEBUG] [Customers API Lite]
-[2025-09-15][22:15:10] [DEBUG] [#<DB::Database:0x75812eb2fed0>]
-[2025-09-15][22:15:10] [INFO ] Server started on port 8765
-[2025-09-15][22:15:10] [INFO ] [production] Kemal is ready to lead at http://0.0.0.0:8765
-[2025-09-15][22:20:10] [DEBUG] [PUT]
-[2025-09-15][22:20:10] [DEBUG] [Saturday Sunday]
-[2025-09-15][22:20:10] [DEBUG] Executing query
-[2025-09-15][22:20:10] [DEBUG] Executing query
-[2025-09-15][22:20:10] [DEBUG] [5|Saturday Sunday]
-[2025-09-15][22:20:10] [INFO ] 201 PUT /v1/customers 204.62ms
-[2025-09-15][22:25:10] [DEBUG] [PUT]
-[2025-09-15][22:25:10] [DEBUG] customer_id=5
-[2025-09-15][22:25:10] [DEBUG] [Saturday.Sunday@example.com]
-[2025-09-15][22:25:10] [DEBUG] Executing query
-[2025-09-15][22:25:10] [DEBUG] Executing query
-[2025-09-15][22:25:10] [DEBUG] [email|Saturday.Sunday@example.com]
-[2025-09-15][22:25:10] [INFO ] 201 PUT /v1/customers/contacts 148.83ms
-[2025-09-15][22:30:20] [DEBUG] [GET]
-[2025-09-15][22:30:20] [DEBUG] customer_id=5
-[2025-09-15][22:30:20] [DEBUG] Executing query
-[2025-09-15][22:30:20] [DEBUG] [5|Saturday Sunday]
-[2025-09-15][22:30:20] [INFO ] 200 GET /v1/customers/5 465.34µs
-[2025-09-15][22:35:30] [DEBUG] [GET]
-[2025-09-15][22:35:30] [DEBUG] customer_id=5 | contact_type=email
-[2025-09-15][22:35:30] [DEBUG] Executing query
-[2025-09-15][22:35:30] [DEBUG] [Saturday.Sunday@example.com]
-[2025-09-15][22:35:30] [INFO ] 200 GET /v1/customers/5/contacts/email 951.57µs
-[2025-09-15][22:40:40] [INFO ] Kemal is going to take a rest!
+[2026-02-10][20:10:00] [DEBUG] [Customers API Lite]
+[2026-02-10][20:10:00] [DEBUG] [#<DB::Database:0x7f12fc815ed0>]
+[2026-02-10][20:10:00] [INFO ] Server started on port 8765
+[2026-02-10][20:10:00] [INFO ] [production] Kemal is ready to lead at http://0.0.0.0:8765
+[2026-02-10][20:10:30] [DEBUG] [PUT]
+[2026-02-10][20:10:30] [DEBUG] [Saturday Sunday]
+[2026-02-10][20:10:30] [DEBUG] Executing query
+[2026-02-10][20:10:30] [DEBUG] Executing query
+[2026-02-10][20:10:30] [DEBUG] [5|Saturday Sunday]
+[2026-02-10][20:10:30] [INFO ] 201 PUT /v1/customers 146.67ms
+[2026-02-10][20:10:50] [DEBUG] [PUT]
+[2026-02-10][20:10:50] [DEBUG] customer_id=5
+[2026-02-10][20:10:50] [DEBUG] [Saturday.Sunday@example.com]
+[2026-02-10][20:10:50] [DEBUG] Executing query
+[2026-02-10][20:10:50] [DEBUG] Executing query
+[2026-02-10][20:10:50] [DEBUG] [email|Saturday.Sunday@example.com]
+[2026-02-10][20:10:50] [INFO ] 201 PUT /v1/customers/contacts 326.65ms
+[2026-02-10][20:11:10] [DEBUG] [GET]
+[2026-02-10][20:11:10] [DEBUG] customer_id=5
+[2026-02-10][20:11:10] [DEBUG] Executing query
+[2026-02-10][20:11:10] [DEBUG] [5|Saturday Sunday]
+[2026-02-10][20:11:10] [INFO ] 200 GET /v1/customers/5 347.04µs
+[2026-02-10][20:11:40] [DEBUG] [GET]
+[2026-02-10][20:11:40] [DEBUG] customer_id=5 | contact_type=email
+[2026-02-10][20:11:40] [DEBUG] Executing query
+[2026-02-10][20:11:40] [DEBUG] [Saturday.Sunday@example.com]
+[2026-02-10][20:11:40] [INFO ] 200 GET /v1/customers/5/contacts/email 260.56µs
+[2026-02-10][20:12:00] [INFO ] Kemal is going to take a rest!
 ```
 
 Messages registered by the Unix system logger can be seen and analyzed using the `journalctl` utility:
@@ -489,23 +489,23 @@ Messages registered by the Unix system logger can be seen and analyzed using the
 ```
 $ journalctl -f
 ...
-Sep 15 22:15:10 <hostname> api-lited[<pid>]: [Customers API Lite]
-Sep 15 22:15:10 <hostname> api-lited[<pid>]: [#<DB::Database:0x75812eb2fed0>]
-Sep 15 22:15:10 <hostname> api-lited[<pid>]: Server started on port 8765
-Sep 15 22:20:10 <hostname> api-lited[<pid>]: [PUT]
-Sep 15 22:20:10 <hostname> api-lited[<pid>]: [Saturday Sunday]
-Sep 15 22:20:10 <hostname> api-lited[<pid>]: [5|Saturday Sunday]
-Sep 15 22:25:10 <hostname> api-lited[<pid>]: [PUT]
-Sep 15 22:25:10 <hostname> api-lited[<pid>]: customer_id=5
-Sep 15 22:25:10 <hostname> api-lited[<pid>]: [Saturday.Sunday@example.com]
-Sep 15 22:25:10 <hostname> api-lited[<pid>]: [email|Saturday.Sunday@example.com]
-Sep 15 22:30:20 <hostname> api-lited[<pid>]: [GET]
-Sep 15 22:30:20 <hostname> api-lited[<pid>]: customer_id=5
-Sep 15 22:30:20 <hostname> api-lited[<pid>]: [5|Saturday Sunday]
-Sep 15 22:35:30 <hostname> api-lited[<pid>]: [GET]
-Sep 15 22:35:30 <hostname> api-lited[<pid>]: customer_id=5 | contact_type=email
-Sep 15 22:35:30 <hostname> api-lited[<pid>]: [Saturday.Sunday@example.com]
-Sep 15 22:40:40 <hostname> api-lited[<pid>]: Server stopped
+Feb 10 20:10:00 <hostname> api-lited[<pid>]: [Customers API Lite]
+Feb 10 20:10:00 <hostname> api-lited[<pid>]: [#<DB::Database:0x7f12fc815ed0>]
+Feb 10 20:10:00 <hostname> api-lited[<pid>]: Server started on port 8765
+Feb 10 20:10:30 <hostname> api-lited[<pid>]: [PUT]
+Feb 10 20:10:30 <hostname> api-lited[<pid>]: [Saturday Sunday]
+Feb 10 20:10:30 <hostname> api-lited[<pid>]: [5|Saturday Sunday]
+Feb 10 20:10:50 <hostname> api-lited[<pid>]: [PUT]
+Feb 10 20:10:50 <hostname> api-lited[<pid>]: customer_id=5
+Feb 10 20:10:50 <hostname> api-lited[<pid>]: [Saturday.Sunday@example.com]
+Feb 10 20:10:50 <hostname> api-lited[<pid>]: [email|Saturday.Sunday@example.com]
+Feb 10 20:11:10 <hostname> api-lited[<pid>]: [GET]
+Feb 10 20:11:10 <hostname> api-lited[<pid>]: customer_id=5
+Feb 10 20:11:10 <hostname> api-lited[<pid>]: [5|Saturday Sunday]
+Feb 10 20:11:40 <hostname> api-lited[<pid>]: [GET]
+Feb 10 20:11:40 <hostname> api-lited[<pid>]: customer_id=5 | contact_type=email
+Feb 10 20:11:40 <hostname> api-lited[<pid>]: [Saturday.Sunday@example.com]
+Feb 10 20:12:00 <hostname> api-lited[<pid>]: Server stopped
 ```
 
 Inside the running container logs might be queried also by `tail`ing the `log/customers-api-lite.log` logfile:
