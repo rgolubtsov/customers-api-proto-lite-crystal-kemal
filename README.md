@@ -68,10 +68,10 @@ Then pull and install all the necessary third-party libraries (so-called **shard
 ```
 $ shards
 Resolving dependencies
-Fetching https://github.com/chris-huxtable/syslog.cr.git
 Fetching https://github.com/crystal-lang/crystal-sqlite3.git
 Fetching https://github.com/kemalcr/kemal.git
 Fetching https://github.com/crystal-community/toml.cr.git
+Fetching https://github.com/chris-huxtable/syslog.cr.git
 Fetching https://github.com/crystal-lang/crystal-db.git
 Fetching https://github.com/luislavena/radix.git
 Fetching https://github.com/crystal-loot/exception_page.git
@@ -91,7 +91,7 @@ Installing kemal (1.7.1)
 **Build** the microservice using the **Shards utility**:
 
 ```
-$ shards --production build --release && \
+$ shards --production build --release --no-debug && \
   if [ -f data/db/customers-api-lite.db.xz ]; then \
      unxz data/db/customers-api-lite.db.xz; \
   fi
