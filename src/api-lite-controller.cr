@@ -23,7 +23,6 @@ module Controller
 
     before_all do |ctx|
         method = ctx.request.method()
-        status = HTTP::Status::IM_A_TEAPOT # <== HTTP 418 I'm a teapot
 
         _dbg(dbg, log, O_BRACKET + method + C_BRACKET)
 
@@ -39,8 +38,10 @@ module Controller
         else
             # For any other method Kemal will automatically respond
             # with the HTTP 404 Not Found status code.
+            status = HTTP::Status::NOT_FOUND
         end
 
+        ctx.response.headers.add(HDR_X_REQ_M, method)
         ctx.response.status_code  = status.code()
         ctx.response.content_type = MIME_TYPE
     end
